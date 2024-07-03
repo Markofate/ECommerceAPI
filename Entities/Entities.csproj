@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Abstract\" />
-    <Folder Include="Conrete\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
