@@ -14,8 +14,9 @@ namespace Entities.Concrete
         public int OrderId { get; set; }
         [ForeignKey("UserId")]
         public int UserId { get; set; }
-        public DateTime Date { get; set; }
-        public string Status { get; set; }
-        public decimal TotalAmount { get; set; }
+        public DateTime? Date { get; set; }
+        public string? Status { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public string? Currency { get; set; }
     }
 }
