@@ -9,7 +9,7 @@ using Entities.Concrete;
 
 namespace Entities.Conrete
 {
-    public class Favorities : BaseEntity
+    public class Favorites : BaseEntity
     {
         [Key]
         public int FavoriteId { get; set; }
