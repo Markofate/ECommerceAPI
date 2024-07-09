@@ -21,11 +21,11 @@ namespace Business.Concrete
         {
             _orderProductsRepository.Add(orderProducts);
         }
-        public void UpdateProduct(OrderProducts orderProducts)
+        public void UpdateOrderProduct(OrderProducts orderProducts)
         {
             _orderProductsRepository.Update(orderProducts);
         }
-        public void DeleteProduct(OrderProducts orderProducts)
+        public void DeleteOrderProduct(OrderProducts orderProducts)
         {
             _orderProductsRepository.Delete(orderProducts);
         }

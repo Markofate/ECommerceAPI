@@ -9,5 +9,7 @@ namespace DataAccess.Abstract.Repositories
 {
     public interface IUserRepository : IGenericRepository<Users>
     {
+        public List<Orders> GetOrderByUserId(int id);
+        public List<CartProducts> GetCartProductsByCartId(int cartId);
     }
 }

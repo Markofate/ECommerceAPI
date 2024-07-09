@@ -1,4 +1,5 @@
 ﻿ using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,16 +17,25 @@ namespace ECommerceAPI.Controllers
         [Route("/Users/")]
         public List<Users> GetUsers()
         {
-            List<Users> content = _usersService.GetUsers();
-
-            return content;
+            return _usersService.GetUsers();
         }
         [HttpGet]
         [Route("/User/{id}")]
         public Users GetUserById(int id)
         {
-            Users content = _usersService.GetUserById(id);
-            return content;
+            return _usersService.GetUserById(id);
+        }
+        [HttpGet]
+        [Route("/User/{id}/order")]
+        public List<Orders> GetOrdersByUserId(int id)
+        {
+            return _usersService.GetOrdersByUserId(id);
+        }
+        [HttpGet]
+        [Route("/User/Cart/{id}/Products")]
+        public List<CartProducts> GetCartProductsByCartId(int id)
+        {
+            return _usersService.GetCartProductsByCartId(id);
         }
     }
 }

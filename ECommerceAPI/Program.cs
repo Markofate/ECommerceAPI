@@ -19,13 +19,18 @@ builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<ICategoryService, CategoryService>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
-builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
-builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddSingleton<IOrderProductService, OrderProductService>();
 builder.Services.AddSingleton<IOrderProductRepository, OrderProductRepository>();
 builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
-
+builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
+builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
+builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddSingleton<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<ICartProductService, CartProductService>();
+builder.Services.AddSingleton<ICartProductRepository, CartProductRepository>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 
 

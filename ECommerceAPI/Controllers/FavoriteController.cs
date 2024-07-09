@@ -14,7 +14,7 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/Favorities/")]
+        [Route("/Favorites/")]
         public List<Favorites> GetFavorites()
         {
             List<Favorites> content = _favoriteService.GetFavorites();
@@ -29,11 +29,10 @@ namespace ECommerceAPI.Controllers
             return content;
         }
         [HttpGet]
-        [Route("/FavoriteUser/{id}")]
+        [Route("/UserFavorites/{userId}")]
         public List<Favorites> GetFavoritesByUserId(int userId)
         {
-            List<Favorites> content = _favoriteService.GetFavoritesByUserId(userId);
-            return content;
+           return _favoriteService.GetFavoritesByUserId(userId);
         }
     }
 }

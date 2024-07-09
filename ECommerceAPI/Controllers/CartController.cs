@@ -6,7 +6,7 @@ namespace ECommerceAPI.Controllers
 {
     public class CartController : Controller
     {   
-        private ICartService _cartService;
+        private readonly ICartService _cartService;
         public CartController(ICartService cartService)
         {
             _cartService = cartService;
@@ -25,6 +25,13 @@ namespace ECommerceAPI.Controllers
         {
             Carts content = _cartService.GetCartById(id);
             return content;
+        }
+
+        [HttpGet]
+        [Route("/User/{id}/Cart/")]
+        public Carts GetCartByUserId(int id)
+        {
+            return _cartService.GetCartByUserId(id);
         }
     }
 }

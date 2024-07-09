@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<CartProducts> CartProducts { get; set; }
         public DbSet<Carts> Carts { get; set; }
         public DbSet<Categories> Categories { get; set; }
-        public DbSet<Favorites> Favorities { get; set; }
+        public DbSet<Favorites> Favorites { get; set; }
         public DbSet<OrderProducts> OrderProducts { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Users> Users { get; set; }

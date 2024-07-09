@@ -11,7 +11,7 @@ namespace Business.Abstract
     {
         public List<Orders> GetOrders();
         public Orders GetOrderById(int id);
-        public List<OrderProducts> GetByOrderId(int id);
+        public List<OrderProducts> GetOrderProductsByOrderId(int id);
     }
 }
 
