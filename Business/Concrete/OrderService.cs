@@ -42,9 +42,9 @@ namespace Business.Concrete
             return _ordersRepository.Get(o=>o.OrderId==id);
         }
 
-        public List<OrderProducts> GetByOrderId(int userId)
+        public List<OrderProducts> GetOrderProductsByOrderId(int userId)
         {
-            return _ordersRepository.GetByOrderId(userId);
+            return _ordersRepository.GetOrderProductsByOrderId(userId);
         }
 
     }

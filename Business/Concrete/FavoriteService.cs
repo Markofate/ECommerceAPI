@@ -14,8 +14,7 @@ namespace Business.Concrete
     public class FavoriteService : IFavoriteService
     {
         private readonly IFavoriteRepository _favoriteRepository;
-
-        FavoriteService(IFavoriteRepository favoriteRepository)
+        public FavoriteService(IFavoriteRepository favoriteRepository)
         {
             _favoriteRepository = favoriteRepository;
         }

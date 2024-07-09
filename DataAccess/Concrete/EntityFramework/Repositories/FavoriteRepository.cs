@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
         {
             using (ECommerceDbContext context = new ECommerceDbContext())
             {
-                return context.Favorities.Where(op => op.UserId == userId).ToList();
+                return context.Favorites.Where(f=>f.UserId==userId).ToList();
             }
         }
     }

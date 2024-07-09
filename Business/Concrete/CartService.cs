@@ -12,7 +12,7 @@ namespace Business.Concrete
 {
     public class CartService : ICartService
     {
-        ICartRepository _cartRepository;
+        private readonly ICartRepository _cartRepository;
 
         public CartService(ICartRepository cartRepository)
         {
@@ -22,11 +22,11 @@ namespace Business.Concrete
         {
             _cartRepository.Add(cart);
         }
-        public void UpdateProduct(Carts cart)
+        public void UpdateCart(Carts cart)
         {
             _cartRepository.Update(cart);
         }
-        public void DeleteProduct(Carts cart)
+        public void DeleteCart(Carts cart)
         {
             _cartRepository.Delete(cart);
         }
@@ -38,6 +38,11 @@ namespace Business.Concrete
         public Carts GetCartById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public Carts GetCartByUserId(int userId)
+        {
+            return _cartRepository.GetCartByUserId(userId);
         }
     }
 }

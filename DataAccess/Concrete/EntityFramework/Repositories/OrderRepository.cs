@@ -11,8 +11,7 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
 {
     public class OrderRepository : GenericRepository<Orders,ECommerceDbContext> , IOrderRepository
     {
-
-        public List<OrderProducts> GetByOrderId(int orderId)
+        public List<OrderProducts> GetOrderProductsByOrderId(int orderId)
         {
             using (ECommerceDbContext context = new ECommerceDbContext())
             {

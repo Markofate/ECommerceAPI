@@ -31,9 +31,9 @@ namespace ECommerceAPI.Controllers
 
         [HttpGet]
         [Route("/OrderProducts/{id}")]
-        public List<OrderProducts> GetByOrderId2(int id)
+        public List<OrderProducts> GetOrderProductsByOrderId(int id)
         {
-            return _ordersService.GetByOrderId(id);
+            return _ordersService.GetOrderProductsByOrderId(id);
         }
     }
 }
