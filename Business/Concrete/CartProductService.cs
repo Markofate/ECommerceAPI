@@ -69,7 +69,7 @@ namespace Business.Concrete
             }
             else
             {
-                throw new Exception("No Basket Found");
+                throw new Exception("No Cart Found");
             }
         }
 
