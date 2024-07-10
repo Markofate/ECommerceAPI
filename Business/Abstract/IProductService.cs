@@ -11,5 +11,6 @@ namespace Business.Abstract
     {
         public List<Products> GetProducts();
         public Products GetProductById(int id);
+        public Products GetProductByCategoryId(params int[] categoryId);
     }
 }

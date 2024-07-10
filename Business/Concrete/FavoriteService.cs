@@ -42,7 +42,7 @@ namespace Business.Concrete
 
         public List<Favorites> GetFavoritesByUserId(int userId)
         {
-            return _favoriteRepository.GetFavoritesByUserId(userId);
+            return _favoriteRepository.GetAll(f=>f.UserId==userId);
         }
     }
 }

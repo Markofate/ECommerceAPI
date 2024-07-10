@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(
-                    "Server=kemal-kunt;Database=ECommerce;Trusted_Connection=True;TrustServerCertificate=True");
+                    "Server=KEMAL-KUNT\\MSSQLSERVER01;Database=ECommerce;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
 

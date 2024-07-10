@@ -15,5 +15,7 @@ namespace Entities.Concrete
         public int CartId { get; set; }
         [ForeignKey("UserId")]
         public int UserId { get; set; }
+
+        public decimal? TotalAmount { get; set; }
     }
 }

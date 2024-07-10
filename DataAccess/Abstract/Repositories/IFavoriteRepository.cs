@@ -7,8 +7,7 @@ using Entities.Conrete;
 
 namespace DataAccess.Abstract.Repositories
 {
-    public interface IFavoriteRepository: IGenericRepository<Favorites>
+    public interface IFavoriteRepository : IGenericRepository<Favorites>
     {
-        public List<Favorites> GetFavoritesByUserId(int userId);
     }
 }

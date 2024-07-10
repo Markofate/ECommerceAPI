@@ -37,16 +37,11 @@ namespace Business.Concrete
 
         public Users GetUserById(int id)
         {
-            throw new NotImplementedException();
+            return _userRepository.Get(ui=>ui.UserId==id);
         }
-
-        public List<Orders> GetOrdersByUserId(int id)
+        public Users GetUserByEmail(string email)
         {
-            return _userRepository.GetOrderByUserId(id);
-        }
-        public List<CartProducts> GetCartProductsByCartId(int cartId)
-        {
-            return _userRepository.GetCartProductsByCartId(cartId);
+            return _userRepository.Get(u=>u.Email==email);
         }
     }
 }

@@ -37,12 +37,12 @@ namespace Business.Concrete
 
         public Carts GetCartById(int id)
         {
-            throw new NotImplementedException();
+           return _cartRepository.Get(c=>c.CartId==id);
         }
 
         public Carts GetCartByUserId(int userId)
         {
-            return _cartRepository.GetCartByUserId(userId);
+            return _cartRepository.Get(ui=>ui.UserId==userId);
         }
     }
 }

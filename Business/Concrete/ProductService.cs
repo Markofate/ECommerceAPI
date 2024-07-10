@@ -41,12 +41,9 @@ namespace Business.Concrete
             return _productRepository.Get(p=>p.ProductId==id);
         }
 
-        
+        public Products GetProductByCategoryId(params int[] categoryId)
+        {
+            return _productRepository.Get(p => categoryId.Contains(p.CategoryId));
+        }
     }
-
-   
-}
-    
-
-
-    
+ }

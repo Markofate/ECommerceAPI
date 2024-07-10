@@ -11,6 +11,5 @@ namespace DataAccess.Abstract.Repositories
 {
     public interface IOrderRepository : IGenericRepository<Orders>
     {
-        public List<OrderProducts> GetOrderProductsByOrderId(int userId);
     }
 }

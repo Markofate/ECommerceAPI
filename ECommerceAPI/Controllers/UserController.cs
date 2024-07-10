@@ -7,35 +7,23 @@ namespace ECommerceAPI.Controllers
 {
     public class UserController : Controller
     {
-        private IUserService _usersService;
+        private IUserService _userService;
         UserController(IUserService usersService)
         {
-            _usersService = usersService;
+            _userService = usersService;
         }
 
         [HttpGet]
         [Route("/Users/")]
         public List<Users> GetUsers()
         {
-            return _usersService.GetUsers();
+            return _userService.GetUsers();
         }
         [HttpGet]
         [Route("/User/{id}")]
         public Users GetUserById(int id)
         {
-            return _usersService.GetUserById(id);
-        }
-        [HttpGet]
-        [Route("/User/{id}/order")]
-        public List<Orders> GetOrdersByUserId(int id)
-        {
-            return _usersService.GetOrdersByUserId(id);
-        }
-        [HttpGet]
-        [Route("/User/Cart/{id}/Products")]
-        public List<CartProducts> GetCartProductsByCartId(int id)
-        {
-            return _usersService.GetCartProductsByCartId(id);
+            return _userService.GetUserById(id);
         }
     }
 }

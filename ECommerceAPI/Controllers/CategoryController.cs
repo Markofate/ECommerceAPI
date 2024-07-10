@@ -6,16 +6,16 @@ namespace ECommerceAPI.Controllers
 {
     public class CategoryController : Controller
     {
-        ICategoryService _categoriesService;
+        ICategoryService _categoryService;
         public CategoryController(ICategoryService categoriesService)
         {
-            _categoriesService = categoriesService;
+            _categoryService = categoriesService;
         }
         [HttpGet]
         [Route("/categories/")]
         public List<Categories> GetCategories()
         {
-            List<Categories> content = _categoriesService.GetCategories();
+            List<Categories> content = _categoryService.GetCategories();
 
             return content;
         }
@@ -23,7 +23,7 @@ namespace ECommerceAPI.Controllers
         [Route("/category/{id}")]
         public Categories GetByCategoryId(int id)
         {
-            Categories content = _categoriesService.GetByCategoryId(id);
+            Categories content = _categoryService.GetByCategoryId(id);
             return content;
         }
     }

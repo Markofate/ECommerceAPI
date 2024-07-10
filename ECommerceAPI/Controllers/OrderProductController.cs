@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,17 +7,17 @@ namespace ECommerceAPI.Controllers
 {
     public class OrderProductController : Controller
     {
-        IOrderProductService _orderProductsService;
+        IOrderProductService _orderProductService;
 
         public OrderProductController(IOrderProductService orderProductsService)
         {
-            _orderProductsService = orderProductsService;
+            _orderProductService = orderProductsService;
         }
         [HttpGet]
         [Route("/OrderProducts/")]
         public List<OrderProducts> GetOrderProducts()
         {
-            List<OrderProducts> content = _orderProductsService.GetOrderProducts();
+            List<OrderProducts> content = _orderProductService.GetOrderProducts();
 
             return content;
         }
@@ -24,8 +25,14 @@ namespace ECommerceAPI.Controllers
         [Route("/OrderProduct/{id}")]
         public OrderProducts GetOrderProductById(int id)
         {
-            OrderProducts content = _orderProductsService.GetOrderProductById(id);
+            OrderProducts content = _orderProductService.GetOrderProductById(id);
             return content;
+        }
+        [HttpGet]
+        [Route("/OrderProducts/{id}")]
+        public List<OrderProducts> GetOrderProductsByOrderId(int id)
+        {
+            return _orderProductService.GetOrderProductsByOrderId(id);
         }
     }
 }
