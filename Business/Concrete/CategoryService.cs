@@ -12,31 +12,31 @@ namespace Business.Concrete
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _catogriesRepository;
+        private readonly ICategoryRepository _catogryRepository;
         public CategoryService(ICategoryRepository catogriesRepository)
         {
-            _catogriesRepository = catogriesRepository;
+            _catogryRepository = catogriesRepository;
         }
         public void AddCategory(Categories category)
         {
-            _catogriesRepository.Add(category);
+            _catogryRepository.Add(category);
         }
         public void UpdateCategory(Categories category)
         {
-            _catogriesRepository.Update(category);
+            _catogryRepository.Update(category);
         }
         public void DeleteCategory(Categories category)
         {
-            _catogriesRepository.Delete(category);
+            _catogryRepository.Delete(category);
         }
         public List<Categories> GetCategories()
         {
-            return _catogriesRepository.GetAll();
+            return _catogryRepository.GetAll();
         }
 
         public Categories GetByCategoryId(int id)
         {
-            return _catogriesRepository.Get(c => c.CategoryId == id);
+            return _catogryRepository.Get(c => c.CategoryId == id);
         }
 
     }

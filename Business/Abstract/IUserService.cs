@@ -11,7 +11,6 @@ namespace Business.Abstract
     {
         public List<Users> GetUsers();
         public Users GetUserById(int id);
-        public List<Orders> GetOrdersByUserId(int id);
-        public List<CartProducts> GetCartProductsByCartId(int cartId);
+        public Users GetUserByEmail(string email);
     }
 }

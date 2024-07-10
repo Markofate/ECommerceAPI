@@ -9,6 +9,5 @@ namespace DataAccess.Abstract.Repositories
 {
     public interface ICartRepository:IGenericRepository<Carts>
     {
-        public Carts GetCartByUserId(int userId);
     }
 }

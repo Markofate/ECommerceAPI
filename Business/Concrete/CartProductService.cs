@@ -13,10 +13,14 @@ namespace Business.Concrete
     public class CartProductService: ICartProductService
     {
         private ICartProductRepository _cartProductRepository;
+        private ICartRepository _cartRepository;
+        private IProductRepository _productRepository;
 
-        public CartProductService(ICartProductRepository cartProductRepository)
+        public CartProductService(ICartProductRepository cartProductRepository, ICartRepository cartRepository, IProductRepository productRepository)
         {
             _cartProductRepository = cartProductRepository;
+            _cartRepository = cartRepository;
+            _productRepository = productRepository;
         }
         public void AddCartProduct(CartProducts product)
         {
@@ -32,12 +36,42 @@ namespace Business.Concrete
         }
         public List<CartProducts> GetCartProducts()
         {
-            throw new NotImplementedException();
+            return _cartProductRepository.GetAll();
         }
 
         public CartProducts GetCartProductById(int id)
         {
-            throw new NotImplementedException();
+            return _cartProductRepository.Get(cp => cp.CartProductId == id);
         }
+
+        public List<CartProducts> GetCartProductsByCartId(int cartId)
+        {
+            return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
+        }
+
+        public void AddProductToCart(int productId, int cartId, int quantity)
+        {
+            CartService tempCartService = new CartService(_cartRepository);
+            ProductService tempProductService = new ProductService(_productRepository);
+            var cart = tempCartService.GetCartById(cartId);
+            var product = tempProductService.GetProductById(productId);
+
+            if (cart != null)
+            {
+                CartProducts cartProduct = new CartProducts()
+                {
+                    CartId = cartId, ProductId = productId, Quantity = quantity,CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now,
+                    CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
+                };
+                AddCartProduct(cartProduct);
+
+                cart.TotalAmount += quantity * product.Price;
+            }
+            else
+            {
+                throw new Exception("No Basket Found");
+            }
+        }
+
     }
 }

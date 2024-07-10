@@ -11,17 +11,17 @@ namespace ECommerceAPI.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _productsService;
+        private readonly IProductService _productService;
         public ProductController(IProductService productsService)
         {
-            _productsService = productsService;
+            _productService = productsService;
         }
         
         [HttpGet]
         [Route("/products/")]
         public List<Products> GetProducts()
         {
-            var content = _productsService.GetProducts();
+            var content = _productService.GetProducts();
 
             return content;
         }
@@ -29,7 +29,7 @@ namespace ECommerceAPI.Controllers
         [Route("/product/{id}")]
         public Products GetProductById(int id)
         {
-            Products content = _productsService.GetProductById(id);
+            Products content = _productService.GetProductById(id);
             return content ;
         }
     }

@@ -12,31 +12,36 @@ namespace Business.Concrete
 {
     public class OrderProductService : IOrderProductService
     {
-        private readonly IOrderProductRepository _orderProductsRepository;
+        private readonly IOrderProductRepository _orderProductRepository;
         public OrderProductService(IOrderProductRepository orderProductsRepository)
         {
-            _orderProductsRepository = orderProductsRepository;
+            _orderProductRepository = orderProductsRepository;
         }
         public void AddOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductsRepository.Add(orderProducts);
+            _orderProductRepository.Add(orderProducts);
         }
         public void UpdateOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductsRepository.Update(orderProducts);
+            _orderProductRepository.Update(orderProducts);
         }
         public void DeleteOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductsRepository.Delete(orderProducts);
+            _orderProductRepository.Delete(orderProducts);
         }
         public List<OrderProducts> GetOrderProducts()
         {
-            return _orderProductsRepository.GetAll();
+            return _orderProductRepository.GetAll();
         }
 
         public OrderProducts GetOrderProductById(int id)
         {
-            return _orderProductsRepository.Get(op=>op.OrderProductId==id);
+            return _orderProductRepository.Get(op=>op.OrderProductId==id);
+        }
+
+        public List<OrderProducts> GetOrderProductsByOrderId(int id)
+        {
+            return _orderProductRepository.GetAll(op=>op.OrderId==id);
         }
     }
 }

@@ -11,11 +11,11 @@ namespace Entities.Concrete
     public class CartProducts : BaseEntity
     {
         [Key]
-        public int CartProductID { get; set; }
+        public int CartProductId { get; set; }
         [ForeignKey("CartId")]
         public int CartId { get; set; }
         [ForeignKey("ProductId")] 
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
     }
 }
