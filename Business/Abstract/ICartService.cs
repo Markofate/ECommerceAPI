@@ -12,5 +12,6 @@ namespace Business.Abstract
         public List<Carts> GetCarts();
         public Carts GetCartById(int id);
         public Carts GetCartByUserId(int userId);
+        public Carts CreateCart(string email);
     }
 }

@@ -14,9 +14,12 @@ namespace Business.Concrete
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        private ICartService _cartService;
+        //her user register olduğunda otomatik olarak user adına bir cart oluşturulmalı
+        public UserService(IUserRepository userRepository, ICartService cartService)
         {
             _userRepository = userRepository;
+                _cartService = cartService;
         }
         public void AddUser(Users user)
         {
@@ -32,7 +35,7 @@ namespace Business.Concrete
         }
         public List<Users> GetUsers()
         {
-            throw new NotImplementedException();
+           return _userRepository.GetAll();
         }
 
         public Users GetUserById(int id)
@@ -42,6 +45,64 @@ namespace Business.Concrete
         public Users GetUserByEmail(string email)
         {
             return _userRepository.Get(u=>u.Email==email);
+        }
+
+        public Users Register(string firstName, string lastName, string password, string rePassword, string email)
+        {
+            try
+            {
+                if (password == rePassword)
+                {
+                    Users user = new Users()
+                    {
+                        FirstName = firstName, LastName = lastName, Email = email, Password = password,
+                        CreatedBy = email, UpdatedBy = email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now
+                    };
+                    AddUser(user);
+                    _cartService.CreateCart(email);
+                    return user;
+                }
+                else
+                {
+                    throw new Exception("Passwords Do Not Match");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
+        }
+
+        public Users Login(string email,string password)
+        {
+            try
+            {
+                var user = GetUserByEmail(email);
+                if (user != null)
+                {
+                    if (user.Password==password)
+                    {
+                        
+                    }
+                    else
+                    {
+                        throw new Exception("Password Or Email Wrong");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Couldn't Find User");
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
         }
     }
 }

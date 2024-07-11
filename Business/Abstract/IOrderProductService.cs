@@ -12,5 +12,6 @@ namespace Business.Abstract
         public List<OrderProducts> GetOrderProducts();
         public OrderProducts GetOrderProductById(int id);
         public List<OrderProducts> GetOrderProductsByOrderId(int id);
+        public List<OrderProducts> AddProductsToOrder(string email);
     }
 }

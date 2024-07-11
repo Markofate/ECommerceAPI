@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -13,18 +15,31 @@ namespace ECommerceAPI.Controllers
         }
         [HttpGet]
         [Route("/categories/")]
-        public List<Categories> GetCategories()
+        public IActionResult GetCategories()
         {
-            List<Categories> content = _categoryService.GetCategories();
-
-            return content;
+            var content = _categoryService.GetCategories();
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/category/{id}")]
-        public Categories GetByCategoryId(int id)
+        public IActionResult GetByCategoryId(int id)
         {
-            Categories content = _categoryService.GetByCategoryId(id);
-            return content;
+            var content = _categoryService.GetByCategoryId(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
     }
 }

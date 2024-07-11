@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
 using Entities.Conrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -15,24 +17,45 @@ namespace ECommerceAPI.Controllers
 
         [HttpGet]
         [Route("/Favorites/")]
-        public List<Favorites> GetFavorites()
+        public IActionResult GetFavorites()
         {
-            List<Favorites> content = _favoriteService.GetFavorites();
-
-            return content;
+            var content = _favoriteService.GetFavorites();
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/Favorite/{id}")]
-        public Favorites GetFavoriteById(int id)
+        public IActionResult GetFavoriteById(int id)
         {
-            Favorites content = _favoriteService.GetFavoriteById(id);
-            return content;
+            var content = _favoriteService.GetFavoriteById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/UserFavorites/{userId}")]
-        public List<Favorites> GetFavoritesByUserId(int userId)
+        public IActionResult GetFavoritesByUserId(int userId)
         {
-           return _favoriteService.GetFavoritesByUserId(userId);
+            var content = _favoriteService.GetFavoritesByUserId(userId);
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
     }
 }

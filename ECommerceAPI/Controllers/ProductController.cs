@@ -5,6 +5,7 @@ using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace ECommerceAPI.Controllers
@@ -19,18 +20,34 @@ namespace ECommerceAPI.Controllers
         
         [HttpGet]
         [Route("/products/")]
-        public List<Products> GetProducts()
+        public IActionResult GetProducts()
         {
             var content = _productService.GetProducts();
-
-            return content;
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+            
+            
         }
         [HttpGet]
         [Route("/product/{id}")]
-        public Products GetProductById(int id)
+        public IActionResult GetProductById(int id)
         {
-            Products content = _productService.GetProductById(id);
-            return content ;
+            var content = _productService.GetProductById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+            
         }
     }
 }

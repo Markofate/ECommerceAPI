@@ -2,6 +2,7 @@
 using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -15,24 +16,45 @@ namespace ECommerceAPI.Controllers
         }
         [HttpGet]
         [Route("/OrderProducts/")]
-        public List<OrderProducts> GetOrderProducts()
+        public IActionResult GetOrderProducts()
         {
-            List<OrderProducts> content = _orderProductService.GetOrderProducts();
-
-            return content;
+            var content = _orderProductService.GetOrderProducts();
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/OrderProduct/{id}")]
-        public OrderProducts GetOrderProductById(int id)
+        public IActionResult GetOrderProductById(int id)
         {
-            OrderProducts content = _orderProductService.GetOrderProductById(id);
-            return content;
+            var content = _orderProductService.GetOrderProductById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/OrderProducts/{id}")]
-        public List<OrderProducts> GetOrderProductsByOrderId(int id)
+        public IActionResult GetOrderProductsByOrderId(int id)
         {
-            return _orderProductService.GetOrderProductsByOrderId(id);
+            var content = _orderProductService.GetOrderProductsByOrderId(id);
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
     }
 }
