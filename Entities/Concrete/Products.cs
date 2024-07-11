@@ -17,9 +17,10 @@ namespace Entities.Concrete
         public decimal? Price { get; set; }
         public int? Stock { get; set; }
         public string? Currency { get; set; }
-        
+        public int Sales { get; set; }
+        public string? Photos { get; set; }
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
-        public int Sales { get; set; }
+        
     }   
 }

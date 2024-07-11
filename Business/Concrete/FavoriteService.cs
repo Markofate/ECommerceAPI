@@ -14,9 +14,11 @@ namespace Business.Concrete
     public class FavoriteService : IFavoriteService
     {
         private readonly IFavoriteRepository _favoriteRepository;
-        public FavoriteService(IFavoriteRepository favoriteRepository)
+        private readonly IUserService _userService;
+        public FavoriteService(IFavoriteRepository favoriteRepository, IUserService userService)
         {
             _favoriteRepository = favoriteRepository;
+            _userService = userService;
         }
         public void AddFavorite(Favorites favorite)
         {
@@ -37,12 +39,71 @@ namespace Business.Concrete
 
         public Favorites GetFavoriteById(int favoriteId)
         {
-            throw new NotImplementedException();
+            return _favoriteRepository.Get(f => f.FavoriteId == favoriteId);
         }
 
         public List<Favorites> GetFavoritesByUserId(int userId)
         {
             return _favoriteRepository.GetAll(f=>f.UserId==userId);
+        }
+
+        public Favorites GetFavoriteByProductId(int productId)
+        {
+            return _favoriteRepository.Get(f => f.ProductId == productId);
+        }
+
+        public Favorites AddProductToFavorite(string email, int productId)
+        {
+            try
+            {
+                var user = _userService.GetUserByEmail(email);
+                if (user != null)
+                {
+                    Favorites favorite = new Favorites()
+                    {
+                    UserId = user.UserId,
+                    ProductId = productId, 
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    CreatedBy = user.Email,
+                    UpdatedBy = user.Email,
+                    };
+                    return favorite;
+                }
+
+                throw new Exception("Couldn't Find User");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
+        }
+
+        public Favorites RemoveProductFromFavorites(string email, int productId)
+        {
+            try
+            {
+                var user = _userService.GetUserByEmail(email);
+                var favorite = GetFavoriteByProductId(productId);
+                if (user != null && favorite != null)
+                {
+                    DeleteFavorite(favorite);
+                    return favorite;
+                }
+                else
+                {
+                    throw new Exception("Something went wrong");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
         }
     }
 }

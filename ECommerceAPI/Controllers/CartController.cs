@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -13,25 +15,46 @@ namespace ECommerceAPI.Controllers
         }
         [HttpGet]
         [Route("/Carts/")]
-        public List<Carts> GetCarts()
+        public IActionResult GetCarts()
         {
-            List<Carts> content = _cartService.GetCarts();
-
-            return content;
+            var content = _cartService.GetCarts();
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/Cart/{id}")]
-        public Carts GetCartById(int id)
+        public IActionResult GetCartById(int id)
         {
-            Carts content = _cartService.GetCartById(id);
-            return content;
+            var content = _cartService.GetCartById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
 
         [HttpGet]
         [Route("/User/{id}/Cart/")]
-        public Carts GetCartByUserId(int id)
+        public IActionResult GetCartByUserId(int id)
         {
-            return _cartService.GetCartByUserId(id);
+            var content = _cartService.GetCartByUserId(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
     }
 }

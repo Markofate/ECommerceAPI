@@ -1,7 +1,9 @@
-﻿using Business.Abstract;
+﻿using System.Net.Mail;
+using Business.Abstract;
 using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -14,31 +16,72 @@ namespace ECommerceAPI.Controllers
         }
         [HttpGet]
         [Route("/CartProducts/")]
-        public List<CartProducts> GetCartProducts()
+        public IActionResult GetCartProducts()
         {
-            List<CartProducts> content = _cartProductService.GetCartProducts();
-
-            return content;
+           var content = _cartProductService.GetCartProducts();
+           if (!content.IsNullOrEmpty())
+           {
+               return Ok(content);
+           }
+           else
+           {
+               return BadRequest(400);
+           }
         }
         [HttpGet]
         [Route("CartProduct/{id}")]
-        public CartProducts GetCartProductById(int id)
+        public IActionResult GetCartProductById(int id)
         {
-            CartProducts content = _cartProductService.GetCartProductById(id);
-            return content;
+            var content = _cartProductService.GetCartProductById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/User/Cart/{id}/Products")]
-        public List<CartProducts> GetCartProductsByCartId(int id)
+        public IActionResult GetCartProductsByCartId(int id)
         {
-            return _cartProductService.GetCartProductsByCartId(id);
+            var content = _cartProductService.GetCartProductsByCartId(id);
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
 
-        [HttpPost("AddProductToCart/{productId}/{cartId}/{quantity}")]
-        public void AddProductToCart(int productId, int cartId, int quantity)
+        [HttpPost("AddProductToCart/{productId}/{email}/{quantity}")]
+        public IActionResult AddProductToCart(int productId, int quantity, string email)
         {
-            _cartProductService.AddProductToCart(productId, cartId, quantity);
+            if (email != null)
+            {
+                return Ok(_cartProductService.AddProductToCart(productId, quantity, email));
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+            
         }
 
+        [HttpDelete("RemoveProductFromCart/{productId}/{email}")]
+        public IActionResult RemoveProductFromCart(int productId, string email)
+        {
+            if (email != null)
+            {
+                return Ok(_cartProductService.RemoveProductFromCart(productId, email));
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+        }
     }
 }

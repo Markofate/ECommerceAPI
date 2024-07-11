@@ -15,15 +15,23 @@ namespace ECommerceAPI.Controllers
 
         [HttpGet]
         [Route("/Users/")]
-        public List<Users> GetUsers()
+        public IActionResult GetUsers()
         {
-            return _userService.GetUsers();
+            return Ok(_userService.GetUsers());
         }
         [HttpGet]
         [Route("/User/{id}")]
-        public Users GetUserById(int id)
+        public IActionResult GetUserById(int id)
         {
-            return _userService.GetUserById(id);
+            if (id != null)
+            {
+                return Ok(_userService.GetUserById(id));
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+            
         }
     }
 }

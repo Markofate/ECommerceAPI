@@ -7,20 +7,24 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Business.Concrete
 {
     public class CartProductService: ICartProductService
     {
-        private ICartProductRepository _cartProductRepository;
-        private ICartRepository _cartRepository;
-        private IProductRepository _productRepository;
+        private readonly ICartProductRepository _cartProductRepository;
+        private readonly ICartService _cartService;
+        private readonly IProductService _productService;
+        private readonly IUserService _userService;
 
-        public CartProductService(ICartProductRepository cartProductRepository, ICartRepository cartRepository, IProductRepository productRepository)
+        public CartProductService(ICartProductRepository cartProductRepository, ICartService cartService, IProductService productService, IUserService userService)
         {
             _cartProductRepository = cartProductRepository;
-            _cartRepository = cartRepository;
-            _productRepository = productRepository;
+            _cartService= cartService;
+            _productService = productService;
+            _userService = userService;
+            
         }
         public void AddCartProduct(CartProducts product)
         {
@@ -49,29 +53,70 @@ namespace Business.Concrete
             return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
         }
 
-        public void AddProductToCart(int productId, int cartId, int quantity)
+        public CartProducts GetCartProductByProductId(int cartId, int productId)
         {
-            CartService tempCartService = new CartService(_cartRepository);
-            ProductService tempProductService = new ProductService(_productRepository);
-            var cart = tempCartService.GetCartById(cartId);
-            var product = tempProductService.GetProductById(productId);
-
-            if (cart != null)
-            {
-                CartProducts cartProduct = new CartProducts()
-                {
-                    CartId = cartId, ProductId = productId, Quantity = quantity,CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now,
-                    CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
-                };
-                AddCartProduct(cartProduct);
-
-                cart.TotalAmount += quantity * product.Price;
-            }
-            else
-            {
-                throw new Exception("No Basket Found");
-            }
+            return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);
         }
 
+        public CartProducts AddProductToCart(int productId, int quantity, string email)
+        {
+            try
+            {
+                var user = _userService.GetUserByEmail(email);
+                var cart = _cartService.GetCartByUserId(user.UserId);
+                var product = _productService.GetProductById(productId);
+                if (cart != null)
+                {
+
+                    CartProducts cartProduct = new CartProducts()
+                    {
+                        CartId = cart.CartId, ProductId = productId, Quantity = quantity, CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
+                    };
+                    AddCartProduct(cartProduct);
+
+                    cart.TotalAmount += quantity * product.Price;
+
+                    return cartProduct;
+                }
+                else
+                {
+                    throw new Exception("Cart Not Found");
+                }
+            }
+            catch(Exception exception)
+            { 
+                Console.WriteLine(exception);
+            }
+
+            return null;
+        }
+
+        public CartProducts RemoveProductFromCart(int productId, string email)
+        {
+            try
+            {
+                var user = _userService.GetUserByEmail(email);
+                var cart = _cartService.GetCartByUserId(user.UserId);
+                var cartProduct = GetCartProductByProductId(cart.CartId, productId);
+
+                if (cart != null && cartProduct != null)
+                {
+                    DeleteCartProduct(cartProduct);
+                    return cartProduct;
+                }
+                else
+                {
+                    throw new Exception("Cart Or Product Not Found");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+
+            return null;
+        }
     }
 }

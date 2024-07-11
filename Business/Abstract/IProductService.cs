@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +10,9 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        public List<Products> GetProducts();
+        public void UpdateProduct(Products product);
+        public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null);
         public Products GetProductById(int id);
-        public Products GetProductByCategoryId(params int[] categoryId);
+        public List<Products> GetProductsByCategoryId(int categoryId);
     }
 }

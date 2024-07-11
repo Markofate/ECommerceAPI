@@ -1,6 +1,7 @@
 ﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -31,19 +32,18 @@ namespace Business.Concrete
         {
             _productRepository.Delete(product);
         }
-        public List<Products> GetProducts()
+        public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null)
         {
-            return _productRepository.GetAll();
+            return _productRepository.GetAll(filter);
         }
 
         public Products GetProductById(int id)
         {
             return _productRepository.Get(p=>p.ProductId==id);
         }
-
-        public Products GetProductByCategoryId(params int[] categoryId)
+        public List<Products> GetProductsByCategoryId(int categoryId)
         {
-            return _productRepository.Get(p => categoryId.Contains(p.CategoryId));
+            return _productRepository.GetAll(p=>p.CategoryId==categoryId);
         }
     }
  }

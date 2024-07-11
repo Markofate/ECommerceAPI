@@ -2,6 +2,7 @@
 using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -16,23 +17,45 @@ namespace ECommerceAPI.Controllers
 
         [HttpGet]
         [Route("/Orders/")]
-        public List<Orders> GetOrders()
+        public IActionResult GetOrders()
         {
-            List<Orders> content = _orderService.GetOrders();
-
-            return content;
+            var content = _orderService.GetOrders();
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/Order/{id}")]
-        public Orders GetOrdersById(int id)
+        public IActionResult GetOrdersById(int id)
         {
-            return _orderService.GetOrderById(id);
+            var content = _orderService.GetOrderById(id);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
         [HttpGet]
         [Route("/User/{id}/order")]
-        public List<Orders> GetOrdersByUserId(int id)
+        public IActionResult GetOrdersByUserId(int id)
         {
-            return _orderService.GetOrdersByUserId(id);
+            var content = _orderService.GetOrdersByUserId(id);
+            if (!content.IsNullOrEmpty())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
         }
     }
 }

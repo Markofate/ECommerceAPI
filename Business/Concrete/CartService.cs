@@ -13,10 +13,12 @@ namespace Business.Concrete
     public class CartService : ICartService
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IUserService _userService;
 
-        public CartService(ICartRepository cartRepository)
+        public CartService(ICartRepository cartRepository, IUserService userService)
         {
             _cartRepository = cartRepository;
+            _userService = userService;
         }
         public void AddCart(Carts cart)
         {
@@ -42,7 +44,31 @@ namespace Business.Concrete
 
         public Carts GetCartByUserId(int userId)
         {
-            return _cartRepository.Get(ui=>ui.UserId==userId);
+            return _cartRepository.Get(c=>c.UserId==userId);
+        }
+
+        public Carts CreateCart(string email)
+        {
+            try
+            {
+                var user = _userService.GetUserByEmail(email);
+                if (user != null)
+                {
+                    Carts cart = new Carts(){UserId = user.UserId, CreatedBy = user.Email, UpdatedBy = user.Email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now};
+                    return cart;
+                }
+                else
+                {
+                    throw new Exception("Couldn't Find User");
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
         }
     }
 }

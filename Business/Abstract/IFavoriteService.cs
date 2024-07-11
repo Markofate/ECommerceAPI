@@ -13,7 +13,8 @@ namespace Business.Abstract
     {
         public List<Favorites> GetFavorites();
         public Favorites GetFavoriteById(int favoriteId);
-
         public List<Favorites> GetFavoritesByUserId(int userId);
+        public Favorites AddProductToFavorite(string email, int productId);
+        public Favorites RemoveProductFromFavorites(string email, int productId);
     }
 }
