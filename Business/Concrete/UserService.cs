@@ -15,51 +15,12 @@ namespace Business.Concrete
         private readonly IUserRepository _userRepository;
 
         private ICartService _cartService;
-        //her user register olduğunda otomatik olarak user adına bir cart oluşturulmalı
         public UserService(IUserRepository userRepository, ICartService cartService)
         {
             _userRepository = userRepository;
                 _cartService = cartService;
         }
-        public bool AddUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Add(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Update(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Delete(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
+        
         public List<Users> GetUsers()
         {
            return _userRepository.GetAll();
@@ -80,7 +41,7 @@ namespace Business.Concrete
             {
                 if (firstName == null || lastName == null || password == null || rePassword == null || email == null)
                 {
-                    throw new Exception("Something Went Wrong");
+                    throw new Exception("Something Is Blank");
                 }
                 if (email == GetUserByEmail(email).Email)
                 {

@@ -58,5 +58,10 @@ namespace Business.Concrete
                 return false;
             }
         }
+
+        public List<ProductPhotos> GetProductPhotosByProductId(int id)
+        {
+            return _productPhotoRepository.GetAll(pp => pp.ProductId == id);
+        }
     }
 }

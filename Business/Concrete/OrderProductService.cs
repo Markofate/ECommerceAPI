@@ -32,45 +32,6 @@ namespace Business.Concrete
             _orderService = orderService;
 
         }
-        public bool AddOrderProduct(OrderProducts orderProducts)
-        {
-            if (orderProducts != null)
-            {
-                _orderProductRepository.Add(orderProducts);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateOrderProduct(OrderProducts orderProducts)
-        {
-            if (orderProducts != null)
-            {
-                _orderProductRepository.Update(orderProducts);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteOrderProduct(OrderProducts orderProducts)
-        {
-            if (orderProducts != null)
-            {
-                _orderProductRepository.Delete(orderProducts);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public List<OrderProducts> GetOrderProducts()
         {
             return _orderProductRepository.GetAll();
@@ -127,10 +88,10 @@ namespace Business.Concrete
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
+                Console.WriteLine(exception);  
             }
 
-            return null;
+            return null;   
         }
     }
 }

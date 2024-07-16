@@ -17,45 +17,6 @@ namespace Business.Concrete
         {
             _catogryRepository = catogriesRepository;
         }
-        public bool AddCategory(Categories category)
-        {
-            if (category != null)
-            {
-                _catogryRepository.Add(category);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateCategory(Categories category)
-        {
-            if (category != null)
-            {
-                _catogryRepository.Update(category);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteCategory(Categories category)
-        {
-            if (category != null)
-            {
-                _catogryRepository.Delete(category);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public List<Categories> GetCategories()
         {
             return _catogryRepository.GetAll();

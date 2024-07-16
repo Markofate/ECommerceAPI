@@ -26,44 +26,6 @@ namespace Business.Concrete
             _userService = userService;
             
         }
-        public bool AddCartProduct(CartProducts product)
-        {
-            if (product != null)
-            {
-                _cartProductRepository.Add(product);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool UpdateCartProduct(CartProducts product)
-        {
-            if (product != null)
-            {
-                _cartProductRepository.Update(product);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteCartProduct(CartProducts product)
-        {
-            if (product != null)
-            {
-                _cartProductRepository.Delete(product);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public List<CartProducts> GetCartProducts()
         {
             return _cartProductRepository.GetAll();

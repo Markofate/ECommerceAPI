@@ -20,19 +20,6 @@ namespace Business.Concrete
         {
             _productRepository = productsRepository;
         }
-        public bool AddProduct(Products product)
-        {
-            if (product != null)
-            {
-                _productRepository.Add(product);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public bool UpdateProduct(Products product)
         {
             if (product != null)
@@ -44,20 +31,6 @@ namespace Business.Concrete
             {
                 return false;
             }
-            
-        }
-        public bool DeleteProduct(Products product)
-        {
-            if (product != null)
-            {
-                _productRepository.Delete(product);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
         }
         public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null)
         {
