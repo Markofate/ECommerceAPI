@@ -78,6 +78,10 @@ namespace Business.Concrete
         {
             try
             {
+                if (firstName == null || lastName == null || password == null || rePassword == null || email == null)
+                {
+                    throw new Exception("Something Went Wrong");
+                }
                 if (email == GetUserByEmail(email).Email)
                 {
                     throw new Exception("Email is Already Used");
@@ -89,7 +93,7 @@ namespace Business.Concrete
                         FirstName = firstName, LastName = lastName, Email = email, Password = password,
                         CreatedBy = email, UpdatedBy = email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now
                     };
-                    AddUser(user);
+                    _userRepository.Add(user);
                     _cartService.CreateCart(email);
                     return user;
                 }
@@ -106,7 +110,7 @@ namespace Business.Concrete
             return null;
         }
 
-        public Users Login(string email,string password)
+        public bool Login(string email,string password)
         {
             try
             {
@@ -115,7 +119,7 @@ namespace Business.Concrete
                 {
                     if (user.Password==password)
                     {
-                        //login kodu
+                        return true;
                     }
                     else
                     {
@@ -133,10 +137,10 @@ namespace Business.Concrete
                 Console.WriteLine(e);
             }
 
-            return null;
+            return false;
         }
 
-        public Users Logout(string email)
+        public bool Logout(string email)
         {
 
             try
@@ -150,7 +154,7 @@ namespace Business.Concrete
                 Console.WriteLine(e);
             }
 
-            return null;
+            return false;
         }
     }
 }

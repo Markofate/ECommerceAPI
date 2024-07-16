@@ -102,7 +102,7 @@ namespace Business.Concrete
                         TotalAmount = cart.TotalAmount,
                         Status = "Order Taken"
                     };
-                    AddOrder(order);
+                    _orderRepository.Add(order);
                     return order;
                 }
                 throw new Exception("Couldn't Find User");

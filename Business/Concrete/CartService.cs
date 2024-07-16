@@ -87,7 +87,7 @@ namespace Business.Concrete
                 if (user != null)
                 {
                     Carts cart = new Carts(){UserId = user.UserId, CreatedBy = user.Email, UpdatedBy = user.Email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now};
-                    AddCart(cart);
+                    _cartRepository.Add(cart);
                     return cart;
                 }
                 else

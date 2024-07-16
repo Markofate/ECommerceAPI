@@ -95,6 +95,7 @@ namespace Business.Concrete
                     CreatedBy = user.Email,
                     UpdatedBy = user.Email,
                     };
+                    _favoriteRepository.Add(favorite);
                     return favorite;
                 }
 
@@ -117,7 +118,7 @@ namespace Business.Concrete
                 var favorite = GetFavoriteByProductId(productId);
                 if (user != null && favorite != null)
                 {
-                    DeleteFavorite(favorite);
+                    _favoriteRepository.Delete(favorite);
                     return favorite;
                 }
                 else

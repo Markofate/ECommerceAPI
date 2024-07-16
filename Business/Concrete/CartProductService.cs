@@ -100,7 +100,7 @@ namespace Business.Concrete
                         UpdatedAt = DateTime.Now,
                         CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
                     };
-                    AddCartProduct(cartProduct);
+                    _cartProductRepository.Add(cartProduct);
 
                     cart.TotalAmount += quantity * product.Price;
 
@@ -129,7 +129,7 @@ namespace Business.Concrete
 
                 if (cart != null && cartProduct != null)
                 {
-                    DeleteCartProduct(cartProduct);
+                    _cartProductRepository.Delete(cartProduct);
                     return cartProduct;
                 }
                 else
