@@ -7,6 +7,7 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
+using Entities.Conrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,17 +32,44 @@ namespace Business.Concrete
             _orderService = orderService;
 
         }
-        public void AddOrderProduct(OrderProducts orderProducts)
+        public bool AddOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductRepository.Add(orderProducts);
+            if (orderProducts != null)
+            {
+                _orderProductRepository.Add(orderProducts);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateOrderProduct(OrderProducts orderProducts)
+        public bool UpdateOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductRepository.Update(orderProducts);
+            if (orderProducts != null)
+            {
+                _orderProductRepository.Update(orderProducts);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteOrderProduct(OrderProducts orderProducts)
+        public bool DeleteOrderProduct(OrderProducts orderProducts)
         {
-            _orderProductRepository.Delete(orderProducts);
+            if (orderProducts != null)
+            {
+                _orderProductRepository.Delete(orderProducts);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<OrderProducts> GetOrderProducts()
         {

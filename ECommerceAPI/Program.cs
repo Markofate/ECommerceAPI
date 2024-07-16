@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ECommerceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<ICategoryService, CategoryService>();
@@ -28,16 +29,29 @@ builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
 builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
 builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
-builder.Services.AddSingleton<ICartService, CartService>();
-builder.Services.AddSingleton<ICartRepository, CartRepository>();
-builder.Services.AddSingleton<ICartProductService, CartProductService>();
-builder.Services.AddSingleton<ICartProductRepository, CartProductRepository>();
+builder.Services.AddSingleton<IProductPhotoRepository, ProductPhotoRepository>();
+builder.Services.AddSingleton<IProductPhotoService, ProductPhotoService>();
+
+// Register UserService and UserRepository
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
+// Register CartService with Lazy<IUserService>
+builder.Services.AddSingleton<ICartService>(provider =>
+    new CartService(
+        provider.GetRequiredService<ICartRepository>(),
+        new Lazy<IUserService>(() => provider.GetRequiredService<IUserService>())
+    ));
+
+builder.Services.AddSingleton<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<ICartProductService, CartProductService>();
+builder.Services.AddSingleton<ICartProductRepository, CartProductRepository>();
 
 
- var app = builder.Build();
+
+
+
+var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {

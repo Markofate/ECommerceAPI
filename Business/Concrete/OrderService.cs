@@ -23,17 +23,44 @@ namespace Business.Concrete
             _userService = userService;
             _cartService = cartService;
         }
-        public void AddOrder(Orders order)
+        public bool AddOrder(Orders order)
         {
-            _orderRepository.Add(order);
+            if (order != null)
+            {
+                _orderRepository.Add(order);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateOrder(Orders order)
+        public bool UpdateOrder(Orders order)
         {
-            _orderRepository.Update(order);
+            if (order != null)
+            {
+                _orderRepository.Update(order);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteOrder(Orders order)
+        public bool DeleteOrder(Orders order)
         {
-            _orderRepository.Delete(order);
+            if (order != null)
+            {
+                _orderRepository.Delete(order);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public List<Orders> GetOrders()

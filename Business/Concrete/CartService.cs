@@ -13,28 +13,55 @@ namespace Business.Concrete
     public class CartService : ICartService
     {
         private readonly ICartRepository _cartRepository;
-        private readonly IUserService _userService;
+        private readonly Lazy<IUserService> _userService;
 
-        public CartService(ICartRepository cartRepository, IUserService userService)
+        public CartService(ICartRepository cartRepository, Lazy<IUserService> userService)
         {
             _cartRepository = cartRepository;
             _userService = userService;
         }
-        public void AddCart(Carts cart)
+        public bool AddCart(Carts cart)
         {
-            _cartRepository.Add(cart);
+            if (cart != null)
+            {
+                _cartRepository.Add(cart);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateCart(Carts cart)
+        public bool UpdateCart(Carts cart)
         {
-            _cartRepository.Update(cart);
+            if (cart != null)
+            {
+                _cartRepository.Update(cart);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteCart(Carts cart)
+        public bool DeleteCart(Carts cart)
         {
-            _cartRepository.Delete(cart);
+            if (cart != null)
+            {
+                _cartRepository.Delete(cart);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<Carts> GetCarts()
         {
-            throw new NotImplementedException();
+            return _cartRepository.GetAll();
         }
 
         public Carts GetCartById(int id)
@@ -47,14 +74,20 @@ namespace Business.Concrete
             return _cartRepository.Get(c=>c.UserId==userId);
         }
 
+        public Users GetUserByEmail(string email)
+        {
+            return _userService.Value.GetUserByEmail(email);
+        }
+
         public Carts CreateCart(string email)
         {
             try
             {
-                var user = _userService.GetUserByEmail(email);
+                var user = _userService.Value.GetUserByEmail(email);
                 if (user != null)
                 {
                     Carts cart = new Carts(){UserId = user.UserId, CreatedBy = user.Email, UpdatedBy = user.Email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now};
+                    AddCart(cart);
                     return cart;
                 }
                 else

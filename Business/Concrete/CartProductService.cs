@@ -26,23 +26,49 @@ namespace Business.Concrete
             _userService = userService;
             
         }
-        public void AddCartProduct(CartProducts product)
+        public bool AddCartProduct(CartProducts product)
         {
-            _cartProductRepository.Add(product);
+            if (product != null)
+            {
+                _cartProductRepository.Add(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        public void UpdateCartProduct(CartProducts product)
+        public bool UpdateCartProduct(CartProducts product)
         {
-            _cartProductRepository.Update(product);
+            if (product != null)
+            {
+                _cartProductRepository.Update(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteCartProduct(CartProducts product)
+        public bool DeleteCartProduct(CartProducts product)
         {
-            _cartProductRepository.Delete(product);
+            if (product != null)
+            {
+                _cartProductRepository.Delete(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<CartProducts> GetCartProducts()
         {
             return _cartProductRepository.GetAll();
         }
-
+        
         public CartProducts GetCartProductById(int id)
         {
             return _cartProductRepository.Get(cp => cp.CartProductId == id);
@@ -53,7 +79,7 @@ namespace Business.Concrete
             return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
         }
 
-        public CartProducts GetCartProductByProductId(int cartId, int productId)
+        public CartProducts GetCartProductByProductAndCartId(int cartId, int productId)
         {
             return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);
         }
@@ -99,7 +125,7 @@ namespace Business.Concrete
             {
                 var user = _userService.GetUserByEmail(email);
                 var cart = _cartService.GetCartByUserId(user.UserId);
-                var cartProduct = GetCartProductByProductId(cart.CartId, productId);
+                var cartProduct = GetCartProductByProductAndCartId(cart.CartId, productId);
 
                 if (cart != null && cartProduct != null)
                 {
