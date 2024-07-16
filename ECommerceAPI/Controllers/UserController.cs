@@ -8,7 +8,7 @@ namespace ECommerceAPI.Controllers
     public class UserController : Controller
     {
         private IUserService _userService;
-        UserController(IUserService usersService)
+        public UserController(IUserService usersService)
         {
             _userService = usersService;
         }
@@ -32,6 +32,16 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(400);
             }
             
+        }
+
+        [HttpPost]
+        [Route("/Register/{firstName}/{lastName}/{password}/{rePassword}/{email}")]
+        public IActionResult Register(string firstName, string lastName, string password, string rePassword, string email)
+        {
+            if (true)
+            {
+                return Ok(_userService.Register(firstName, lastName, password, rePassword, email));
+            }
         }
     }
 }

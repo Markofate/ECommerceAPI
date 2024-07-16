@@ -21,17 +21,44 @@ namespace Business.Concrete
             _userRepository = userRepository;
                 _cartService = cartService;
         }
-        public void AddUser(Users user)
+        public bool AddUser(Users user)
         {
-            _userRepository.Add(user);
+            if (user != null)
+            {
+                _userRepository.Add(user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateUser(Users user)
+        public bool UpdateUser(Users user)
         {
-            _userRepository.Update(user);
+            if (user != null)
+            {
+                _userRepository.Update(user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteUser(Users user)
+        public bool DeleteUser(Users user)
         {
-            _userRepository.Delete(user);
+            if (user != null)
+            {
+                _userRepository.Delete(user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<Users> GetUsers()
         {
@@ -51,6 +78,10 @@ namespace Business.Concrete
         {
             try
             {
+                if (email == GetUserByEmail(email).Email)
+                {
+                    throw new Exception("Email is Already Used");
+                }
                 if (password == rePassword)
                 {
                     Users user = new Users()
@@ -84,7 +115,7 @@ namespace Business.Concrete
                 {
                     if (user.Password==password)
                     {
-                        
+                        //login kodu
                     }
                     else
                     {
@@ -96,6 +127,23 @@ namespace Business.Concrete
                     throw new Exception("Couldn't Find User");
                 }
                 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return null;
+        }
+
+        public Users Logout(string email)
+        {
+
+            try
+            {
+                var user = GetUserByEmail(email);
+                //logout kodu
+
             }
             catch (Exception e)
             {

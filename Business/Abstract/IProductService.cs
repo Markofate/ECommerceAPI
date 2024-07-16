@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        public void UpdateProduct(Products product);
+        public bool UpdateProduct(Products product);
         public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null);
         public Products GetProductById(int id);
         public List<Products> GetProductsByCategoryId(int categoryId);

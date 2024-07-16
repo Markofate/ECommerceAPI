@@ -20,17 +20,44 @@ namespace Business.Concrete
             _favoriteRepository = favoriteRepository;
             _userService = userService;
         }
-        public void AddFavorite(Favorites favorite)
+        public bool AddFavorite(Favorites favorite)
         {
-            _favoriteRepository.Add(favorite);
+            if (favorite != null)
+            {
+                _favoriteRepository.Add(favorite);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateFavorite(Favorites favorite)
+        public bool UpdateFavorite(Favorites favorite)
         {
-            _favoriteRepository.Update(favorite);
+            if (favorite != null)
+            {
+                _favoriteRepository.Update(favorite);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteFavorite(Favorites favorite)
+        public bool DeleteFavorite(Favorites favorite)
         {
-            _favoriteRepository.Delete(favorite);
+            if (favorite != null)
+            {
+                _favoriteRepository.Delete(favorite);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<Favorites> GetFavorites()
         {

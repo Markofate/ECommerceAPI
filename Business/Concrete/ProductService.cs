@@ -20,17 +20,44 @@ namespace Business.Concrete
         {
             _productRepository = productsRepository;
         }
-        public void AddProduct(Products product)
+        public bool AddProduct(Products product)
         {
-            _productRepository.Add(product);
+            if (product != null)
+            {
+                _productRepository.Add(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void UpdateProduct(Products product)
+        public bool UpdateProduct(Products product)
         {
-            _productRepository.Update(product);
+            if (product != null)
+            {
+                _productRepository.Update(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
-        public void DeleteProduct(Products product)
+        public bool DeleteProduct(Products product)
         {
-            _productRepository.Delete(product);
+            if (product != null)
+            {
+                _productRepository.Delete(product);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null)
         {
