@@ -23,46 +23,7 @@ namespace Business.Concrete
             _userService = userService;
             _cartService = cartService;
         }
-        public bool AddOrder(Orders order)
-        {
-            if (order != null)
-            {
-                _orderRepository.Add(order);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateOrder(Orders order)
-        {
-            if (order != null)
-            {
-                _orderRepository.Update(order);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteOrder(Orders order)
-        {
-            if (order != null)
-            {
-                _orderRepository.Delete(order);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
+        
         public List<Orders> GetOrders()
         {
             return _orderRepository.GetAll();
@@ -102,7 +63,7 @@ namespace Business.Concrete
                         TotalAmount = cart.TotalAmount,
                         Status = "Order Taken"
                     };
-                    AddOrder(order);
+                    _orderRepository.Add(order);
                     return order;
                 }
                 throw new Exception("Couldn't Find User");

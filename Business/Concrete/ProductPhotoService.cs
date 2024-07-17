@@ -13,7 +13,6 @@ namespace Business.Concrete
     {
         private readonly IProductPhotoRepository _productPhotoRepository;
 
-        //her user register olduğunda otomatik olarak user adına bir cart oluşturulmalı
         public ProductPhotoService(IProductPhotoRepository productPhotoRepository)
         {
             _productPhotoRepository = productPhotoRepository;
@@ -58,6 +57,11 @@ namespace Business.Concrete
             {
                 return false;
             }
+        }
+
+        public List<ProductPhotos> GetProductPhotosByProductId(int id)
+        {
+            return _productPhotoRepository.GetAll(pp => pp.ProductId == id);
         }
     }
 }

@@ -14,52 +14,13 @@ namespace Business.Concrete
     {
         private readonly IUserRepository _userRepository;
 
-        private ICartService _cartService;
-        //her user register olduğunda otomatik olarak user adına bir cart oluşturulmalı
+        private readonly ICartService _cartService;
         public UserService(IUserRepository userRepository, ICartService cartService)
         {
             _userRepository = userRepository;
                 _cartService = cartService;
         }
-        public bool AddUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Add(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Update(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteUser(Users user)
-        {
-            if (user != null)
-            {
-                _userRepository.Delete(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
+        
         public List<Users> GetUsers()
         {
            return _userRepository.GetAll();
@@ -78,6 +39,10 @@ namespace Business.Concrete
         {
             try
             {
+                if (firstName == null || lastName == null || password == null || rePassword == null || email == null)
+                {
+                    throw new Exception("Something Is Blank");
+                }
                 if (email == GetUserByEmail(email).Email)
                 {
                     throw new Exception("Email is Already Used");
@@ -89,7 +54,7 @@ namespace Business.Concrete
                         FirstName = firstName, LastName = lastName, Email = email, Password = password,
                         CreatedBy = email, UpdatedBy = email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now
                     };
-                    AddUser(user);
+                    _userRepository.Add(user);
                     _cartService.CreateCart(email);
                     return user;
                 }
@@ -106,7 +71,7 @@ namespace Business.Concrete
             return null;
         }
 
-        public Users Login(string email,string password)
+        public bool Login(string email,string password)
         {
             try
             {
@@ -115,11 +80,11 @@ namespace Business.Concrete
                 {
                     if (user.Password==password)
                     {
-                        //login kodu
+                        return true;
                     }
                     else
                     {
-                        throw new Exception("Password Or Email Wrong");
+                        throw new Exception("Password Or Email Is Wrong");
                     }
                 }
                 else
@@ -133,10 +98,10 @@ namespace Business.Concrete
                 Console.WriteLine(e);
             }
 
-            return null;
+            return false;
         }
 
-        public Users Logout(string email)
+        public bool Logout(string email)
         {
 
             try
@@ -150,7 +115,7 @@ namespace Business.Concrete
                 Console.WriteLine(e);
             }
 
-            return null;
+            return false;
         }
     }
 }

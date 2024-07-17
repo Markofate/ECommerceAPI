@@ -11,7 +11,7 @@ namespace Entities.Concrete
     public class ProductPhotos : BaseEntity
     {
         [Key]
-        public int PhotoId { get; set; }
+        public int ProductPhotoId { get; set; }
         [ForeignKey("ProductId")]
         public int ProductId { get; set; }
         public string PhotoUrl{ get; set; }

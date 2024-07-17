@@ -20,45 +20,6 @@ namespace Business.Concrete
             _favoriteRepository = favoriteRepository;
             _userService = userService;
         }
-        public bool AddFavorite(Favorites favorite)
-        {
-            if (favorite != null)
-            {
-                _favoriteRepository.Add(favorite);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateFavorite(Favorites favorite)
-        {
-            if (favorite != null)
-            {
-                _favoriteRepository.Update(favorite);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteFavorite(Favorites favorite)
-        {
-            if (favorite != null)
-            {
-                _favoriteRepository.Delete(favorite);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public List<Favorites> GetFavorites()
         {
             return _favoriteRepository.GetAll();
@@ -95,6 +56,7 @@ namespace Business.Concrete
                     CreatedBy = user.Email,
                     UpdatedBy = user.Email,
                     };
+                    _favoriteRepository.Add(favorite);
                     return favorite;
                 }
 
@@ -117,7 +79,7 @@ namespace Business.Concrete
                 var favorite = GetFavoriteByProductId(productId);
                 if (user != null && favorite != null)
                 {
-                    DeleteFavorite(favorite);
+                    _favoriteRepository.Delete(favorite);
                     return favorite;
                 }
                 else

@@ -20,45 +20,6 @@ namespace Business.Concrete
             _cartRepository = cartRepository;
             _userService = userService;
         }
-        public bool AddCart(Carts cart)
-        {
-            if (cart != null)
-            {
-                _cartRepository.Add(cart);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool UpdateCart(Carts cart)
-        {
-            if (cart != null)
-            {
-                _cartRepository.Update(cart);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        public bool DeleteCart(Carts cart)
-        {
-            if (cart != null)
-            {
-                _cartRepository.Delete(cart);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
         public List<Carts> GetCarts()
         {
             return _cartRepository.GetAll();
@@ -74,10 +35,6 @@ namespace Business.Concrete
             return _cartRepository.Get(c=>c.UserId==userId);
         }
 
-        public Users GetUserByEmail(string email)
-        {
-            return _userService.Value.GetUserByEmail(email);
-        }
 
         public Carts CreateCart(string email)
         {
@@ -87,7 +44,7 @@ namespace Business.Concrete
                 if (user != null)
                 {
                     Carts cart = new Carts(){UserId = user.UserId, CreatedBy = user.Email, UpdatedBy = user.Email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now};
-                    AddCart(cart);
+                    _cartRepository.Add(cart);
                     return cart;
                 }
                 else
