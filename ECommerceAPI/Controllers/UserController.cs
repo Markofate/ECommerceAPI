@@ -7,7 +7,7 @@ namespace ECommerceAPI.Controllers
 {
     public class UserController : Controller
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         public UserController(IUserService usersService)
         {
             _userService = usersService;
@@ -23,15 +23,15 @@ namespace ECommerceAPI.Controllers
         [Route("/User/{id}")]
         public IActionResult GetUserById(int id)
         {
-            if (id != null)
-            {
-                return Ok(_userService.GetUserById(id));
-            }
-            else
+            if (id == null)
             {
                 return BadRequest(400);
             }
-            
+            else
+            {
+                return Ok(_userService.GetUserById(id));
+            }
+
         }
 
         [HttpPost]

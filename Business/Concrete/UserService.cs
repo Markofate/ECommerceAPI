@@ -14,7 +14,7 @@ namespace Business.Concrete
     {
         private readonly IUserRepository _userRepository;
 
-        private ICartService _cartService;
+        private readonly ICartService _cartService;
         public UserService(IUserRepository userRepository, ICartService cartService)
         {
             _userRepository = userRepository;
@@ -84,7 +84,7 @@ namespace Business.Concrete
                     }
                     else
                     {
-                        throw new Exception("Password Or Email Wrong");
+                        throw new Exception("Password Or Email Is Wrong");
                     }
                 }
                 else
