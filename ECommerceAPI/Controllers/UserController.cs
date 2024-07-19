@@ -1,5 +1,6 @@
 ﻿ using Business.Abstract;
 using Business.Concrete;
+using ECommerceAPI.ViewModels;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,12 +36,13 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpPost]
-        [Route("/Register/{firstName}/{lastName}/{password}/{rePassword}/{email}")]
-        public IActionResult Register(string firstName, string lastName, string password, string rePassword, string email)
+        [Route("/Register")]
+        public IActionResult Register([FromBody]RegisterViewModel registerViewModel)
         {
             if (true)
             {
-                return Ok(_userService.Register(firstName, lastName, password, rePassword, email));
+                return Ok(_userService.Register(registerViewModel.FirstName, registerViewModel.LastName, registerViewModel.Password
+                    , registerViewModel.RePassword, registerViewModel.Email));
             }
         }
     }

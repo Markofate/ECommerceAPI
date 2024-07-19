@@ -7,6 +7,9 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Business.Concrete
 {
@@ -35,15 +38,20 @@ namespace Business.Concrete
             return _userRepository.Get(u=>u.Email==email);
         }
 
+        public List<string> GetUserEmails()
+        {
+            return _userRepository.GetAll().Select(u=>u.Email).ToList();
+        }
+
         public Users Register(string firstName, string lastName, string password, string rePassword, string email)
         {
             try
             {
-                if (firstName == null || lastName == null || password == null || rePassword == null || email == null)
+                if (firstName.IsNullOrEmpty() || lastName.IsNullOrEmpty() || password.IsNullOrEmpty() || rePassword.IsNullOrEmpty() || email.IsNullOrEmpty())
                 {
                     throw new Exception("Something Is Blank");
                 }
-                if (email == GetUserByEmail(email).Email)
+                if (GetUserEmails().Contains(email))
                 {
                     throw new Exception("Email is Already Used");
                 }
