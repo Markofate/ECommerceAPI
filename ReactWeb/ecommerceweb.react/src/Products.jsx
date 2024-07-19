@@ -21,25 +21,25 @@ const Products = () => {
         fetchProducts();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) return <p id='loading'>Loading...</p>;
+    if (error) return <p id='error'>Error: {error}</p>;
 
     return (
         <>
-        <div className='col-sm' >
-            <h1>Products</h1>
-                {products.map(product => (
-                    <div className='card' key={product.productId}>
-                        {product.photos && <img className="card-img-top" id='productPhoto' src={product.photos} alt={product.product}></img>}
-                        <h2>{product.product}</h2>
-                        <div className="card-body">
-                        <p>Description: {product.description}</p>
-                        <p>Stock: {product.stock}</p>
-                        <p>Price: {product.price} {product.currency}</p>
+        <h1>Products</h1>
+            <div className='col-sm' >
+                    {products.map(product => (
+                        <div className='card' key={product.productId} /*onClick={} detay sayfası eklenecek*/ >
+                            {product.photos && <img className="card-img-top" id='productPhoto' src={product.photos} alt={product.product}></img>}
+                            <h2>{product.product}</h2>
+                            <div className="card-body">
+                            <p>Description: {product.description}</p>
+                            <p>Stock: {product.stock}</p>
+                            <p>Price: {product.price} {product.currency}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
-        </div>
+                    ))}
+            </div>
         </>
     );
 };
