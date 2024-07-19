@@ -25,22 +25,22 @@ const Products = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
+        <>
+        <div className='col-sm' >
             <h1>Products</h1>
-            <ul>
                 {products.map(product => (
-                    <li key={product.productId}>
+                    <div className='card' key={product.productId}>
+                        {product.photos && <img className="card-img-top" id='productPhoto' src={product.photos} alt={product.product}></img>}
                         <h2>{product.product}</h2>
+                        <div className="card-body">
                         <p>Description: {product.description}</p>
-                        <p>Price: {product.price} {product.currency}</p>
                         <p>Stock: {product.stock}</p>
-                        <p>Sales: {product.sales}</p>
-                        <p>Category ID: {product.categoryId}</p>
-                        {product.photos && <img id='productPhoto' src={product.photos} alt={product.product} />}
-                    </li>
+                        <p>Price: {product.price} {product.currency}</p>
+                        </div>
+                    </div>
                 ))}
-            </ul>
         </div>
+        </>
     );
 };
 

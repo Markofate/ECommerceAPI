@@ -13,7 +13,7 @@ namespace Business.Abstract
         public List<Users> GetUsers();
         public Users GetUserById(int id);
         public Users GetUserByEmail(string email);
-
+        public List<string> GetUserEmails();
         public Users Register(string firstName, string lastName, string password, string rePassword,
             string email);
     }
