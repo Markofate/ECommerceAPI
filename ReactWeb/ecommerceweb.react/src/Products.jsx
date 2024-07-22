@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import 'primeicons/primeicons.css';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -37,19 +39,23 @@ const Products = () => {
         {products.length === 0 && !loading && <p>No products available</p>}
         {products.map(product => (
           <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
-            <Link to={`/product/${product.productId}`}>
             <div className='card'>
+            <Link to={`/product/${product.productId}`}>
               <div id='imageWrapper'>
                   {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
               </div>
+            </Link>
+              <i className="pi pi-heart"></i>
               <div className="card-body d-flex flex-column">
+              <Link to={`/product/${product.productId}`}>
                   <h3 className='card-title'>{product.product}</h3>
+              </Link>    
                 <p className='card-text'>Description: {product.description}</p>
                 <p>Stock: {product.stock}</p>
-                <p>Price: {product.price} {product.currency}</p>
+                <p>Price: {product.price} {product.currency}</p> 
               </div>
             </div>
-            </Link>
+            
           </div>
         ))}
       </div>

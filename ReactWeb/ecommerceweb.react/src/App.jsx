@@ -1,6 +1,7 @@
-import './App.css'
-import ProductDetail from "./ProductDetail.jsx"
-import  Products  from "./Products.jsx"
+import './App.css';
+import ProductDetail from "./ProductDetail.jsx";
+import  Products  from "./Products.jsx";
+import "primereact/resources/themes/mdc-light-deeppurple/theme.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
