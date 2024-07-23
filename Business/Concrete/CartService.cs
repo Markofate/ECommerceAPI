@@ -7,19 +7,18 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
-using Microsoft.Identity.Client;
 
 namespace Business.Concrete
 {
     public class CartService : ICartService
     {
         private readonly ICartRepository _cartRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly Lazy<IUserService> _userService;
 
-        public CartService(ICartRepository cartRepository, IUserRepository userRepository)
+        public CartService(ICartRepository cartRepository, Lazy<IUserService> userService)
         {
             _cartRepository = cartRepository;
-            _userRepository = userRepository;
+            _userService = userService;
         }
         public List<Carts> GetCarts()
         {
@@ -41,7 +40,7 @@ namespace Business.Concrete
         {
             try
             {
-                var user = _userRepository.Get(u => u.Email == email);
+                var user = _userService.Value.GetUserByEmail(email);
                 if (user != null)
                 {
                     Carts cart = new Carts(){UserId = user.UserId, CreatedBy = user.Email, UpdatedBy = user.Email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now};

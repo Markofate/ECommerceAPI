@@ -1,66 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import 'primeicons/primeicons.css';
-
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get('https://localhost:7227/products');
-        setProducts(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('https://localhost:7227/products');
+                setProducts(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
 
-    fetchProducts();
-  }, []);
+        fetchProducts();
+    }, []);
 
-  const handleClick = (id) => {
-    navigate(`/product/${id}`);
-  };
+    if (loading) return <p id='loading'>Loading...</p>;
+    if (error) return <p id='error'>Error: {error}</p>;
 
-  if (loading) return <p id='loading'>Loading...</p>;
-  if (error) return <p id='error'>Error: {error}</p>;
-
-  return (
-    <>
-      <div className='row mt-4'>
-        {products.length === 0 && !loading && <p>No products available</p>}
-        {products.map(product => (
-          <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
-            <div className='card'>
-            <Link to={`/product/${product.productId}`}>
-              <div id='imageWrapper'>
-                  {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
-              </div>
-            </Link>
-              <i className="pi pi-heart"></i>
-              <div className="card-body d-flex flex-column">
-              <Link to={`/product/${product.productId}`}>
-                  <h3 className='card-title'>{product.product}</h3>
-              </Link>    
-                <p className='card-text'>Description: {product.description}</p>
-                <p>Stock: {product.stock}</p>
-                <p>Price: {product.price} {product.currency}</p> 
-              </div>
+    return (
+        <>
+        <h1>Products</h1>
+            <div className='col-sm' >
+                    {products.map(product => (
+                        <div className='card' key={product.productId} /*onClick={} detay sayfası eklenecek*/ >
+                            {product.photos && <img className="card-img-top" id='productPhoto' src={product.photos} alt={product.product}></img>}
+                            <h2>{product.product}</h2>
+                            <div className="card-body">
+                            <p>Description: {product.description}</p>
+                            <p>Stock: {product.stock}</p>
+                            <p>Price: {product.price} {product.currency}</p>
+                            </div>
+                        </div>
+                    ))}
             </div>
-            
-          </div>
-        ))}
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
-export default React.memo(Products);
+export default Products;
