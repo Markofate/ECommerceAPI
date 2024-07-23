@@ -49,5 +49,12 @@ namespace ECommerceAPI.Controllers
             }
             
         }
+
+        [HttpGet]
+        [Route("/User/{id}/Cart/Products")]
+        public List<Products> GetProductsByUsertId(int userId)
+        {
+            return _productService.GetProductsByUserId(userId);
+        }
     }
 }

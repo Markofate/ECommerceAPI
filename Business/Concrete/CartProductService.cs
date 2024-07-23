@@ -14,16 +14,16 @@ namespace Business.Concrete
     public class CartProductService: ICartProductService
     {
         private readonly ICartProductRepository _cartProductRepository;
-        private readonly ICartService _cartService;
-        private readonly IProductService _productService;
-        private readonly IUserService _userService;
+        private readonly ICartRepository _cartRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
 
-        public CartProductService(ICartProductRepository cartProductRepository, ICartService cartService, IProductService productService, IUserService userService)
+        public CartProductService(ICartProductRepository cartProductRepository, ICartRepository cartRepository, IProductRepository productRepository, IUserRepository userRepository)
         {
             _cartProductRepository = cartProductRepository;
-            _cartService= cartService;
-            _productService = productService;
-            _userService = userService;
+            _cartRepository = cartRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
             
         }
         public List<CartProducts> GetCartProducts()
@@ -41,6 +41,14 @@ namespace Business.Concrete
             return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
         }
 
+        public List<CartProducts> GetCartProductsByUserId(int userId)
+        {
+            var user = _userRepository.Get(u => u.UserId == userId);
+            var cart = _cartRepository.Get(c => c.UserId == user.UserId);
+
+            return _cartProductRepository.GetAll(cp=>cp.CartId == cart.CartId);
+        }
+
         public CartProducts GetCartProductByProductAndCartId(int cartId, int productId)
         {
             return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);
@@ -50,9 +58,9 @@ namespace Business.Concrete
         {
             try
             {
-                var user = _userService.GetUserByEmail(email);
-                var cart = _cartService.GetCartByUserId(user.UserId);
-                var product = _productService.GetProductById(productId);
+                var user = _userRepository.Get(u=>u.Email==email);
+                var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
+                var product = _productRepository.Get(p=>p.ProductId == productId);
                 if (cart != null)
                 {
 
@@ -85,8 +93,8 @@ namespace Business.Concrete
         {
             try
             {
-                var user = _userService.GetUserByEmail(email);
-                var cart = _cartService.GetCartByUserId(user.UserId);
+                var user = _userRepository.Get(u => u.Email == email);
+                var cart = _cartRepository.Get(c => c.UserId == user.UserId);
                 var cartProduct = GetCartProductByProductAndCartId(cart.CartId, productId);
 
                 if (cart != null && cartProduct != null)

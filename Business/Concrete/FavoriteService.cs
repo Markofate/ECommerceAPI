@@ -14,11 +14,11 @@ namespace Business.Concrete
     public class FavoriteService : IFavoriteService
     {
         private readonly IFavoriteRepository _favoriteRepository;
-        private readonly IUserService _userService;
-        public FavoriteService(IFavoriteRepository favoriteRepository, IUserService userService)
+        private readonly IUserRepository _userRepository;
+        public FavoriteService(IFavoriteRepository favoriteRepository, IUserRepository userRepository)
         {
             _favoriteRepository = favoriteRepository;
-            _userService = userService;
+            _userRepository = userRepository;
         }
         public List<Favorites> GetFavorites()
         {
@@ -44,7 +44,7 @@ namespace Business.Concrete
         {
             try
             {
-                var user = _userService.GetUserByEmail(email);
+                var user = _userRepository.Get(u => u.Email == email);
                 if (user != null)
                 {
                     Favorites favorite = new Favorites()
@@ -75,7 +75,7 @@ namespace Business.Concrete
         {
             try
             {
-                var user = _userService.GetUserByEmail(email);
+                var user = _userRepository.Get(u => u.Email == email);
                 var favorite = GetFavoriteByProductId(productId);
                 if (user != null && favorite != null)
                 {

@@ -21,24 +21,28 @@ builder.Services.AddDbContext<ECommerceDbContext>(options => options.UseSqlServe
 
 builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+
 builder.Services.AddSingleton<ICategoryService, CategoryService>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
+
 builder.Services.AddSingleton<IOrderProductService, OrderProductService>();
 builder.Services.AddSingleton<IOrderProductRepository, OrderProductRepository>();
+
 builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
+
 builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
 builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
-builder.Services.AddSingleton<IProductPhotoRepository, ProductPhotoRepository>();
-builder.Services.AddSingleton<IProductPhotoService, ProductPhotoService>();
-builder.Services.AddSingleton<ICartService, CartService>();
 
-// Register UserService and UserRepository
+builder.Services.AddSingleton<IProductPhotoService, ProductPhotoService>();
+builder.Services.AddSingleton<IProductPhotoRepository, ProductPhotoRepository>();
+
+builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddSingleton<ICartRepository, CartRepository>();
+
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
-
-builder.Services.AddSingleton<ICartRepository, CartRepository>();
 builder.Services.AddSingleton<ICartProductService, CartProductService>();
 builder.Services.AddSingleton<ICartProductRepository, CartProductRepository>();
 

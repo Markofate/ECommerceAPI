@@ -42,11 +42,12 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(400);
             }
         }
+        /*
         [HttpGet]
-        [Route("/User/Cart/{id}/Products")]
-        public IActionResult GetCartProductsByCartId(int id)
+        [Route("/User/{id}/Cart/Products")]
+        public IActionResult GetCartProductsByUserId(int id)
         {
-            var content = _cartProductService.GetCartProductsByCartId(id);
+            var content = _cartProductService.GetCartProductsByUserId(id);
             if (!content.IsNullOrEmpty())
             {
                 return Ok(content);
@@ -55,7 +56,7 @@ namespace ECommerceAPI.Controllers
             {
                 return BadRequest(400);
             }
-        }
+        }*/
 
         [HttpPost("AddProductToCart/{productId}/{email}/{quantity}")]
         public IActionResult AddProductToCart(int productId, int quantity, string email)

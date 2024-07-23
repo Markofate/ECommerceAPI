@@ -26,9 +26,7 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleClick = (id) => {
-    navigate(`/product/${id}`);
-  };
+
 
   if (loading) return <p id='loading'>Loading...</p>;
   if (error) return <p id='error'>Error: {error}</p>;
@@ -45,17 +43,16 @@ const Products = () => {
                   {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
               </div>
             </Link>
-              <i className="pi pi-heart"></i>
+              <i className="pi pi-heart favorite-icon mr-3"></i>
               <div className="card-body d-flex flex-column">
+               
               <Link to={`/product/${product.productId}`}>
-                  <h3 className='card-title'>{product.product}</h3>
-              </Link>    
-                <p className='card-text'>Description: {product.description}</p>
-                <p>Stock: {product.stock}</p>
+                  <h3 className='card-title '>{product.product}</h3>
+              </Link>   
                 <p>Price: {product.price} {product.currency}</p> 
+                <p className='card-text'>Description: {product.description}</p>
               </div>
             </div>
-            
           </div>
         ))}
       </div>

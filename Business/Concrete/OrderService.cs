@@ -15,13 +15,10 @@ namespace Business.Concrete
     public class OrderService:IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IUserService _userService;
-        private readonly ICartService _cartService;
-        public OrderService(IOrderRepository ordersRepository, IUserService userService, ICartService cartService)
+        
+        public OrderService(IOrderRepository ordersRepository)
         {
             _orderRepository = ordersRepository;
-            _userService = userService;
-            _cartService = cartService;
         }
         
         public List<Orders> GetOrders()
@@ -45,36 +42,7 @@ namespace Business.Concrete
 
         public Orders CreateOrder(string email)
         {
-            try
-            {
-                var user = _userService.GetUserByEmail(email);
-                var cart = _cartService.GetCartByUserId(user.UserId);
-                if (user!=null)
-                {
-                    Orders order = new Orders()
-                    {
-                        UserId = user.UserId,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
-                        CreatedBy = user.Email,
-                        UpdatedBy = user.Email,
-                        Date = DateTime.Now,
-                        Currency = cart.Currency,
-                        TotalAmount = cart.TotalAmount,
-                        Status = "Order Taken"
-                    };
-                    _orderRepository.Add(order);
-                    return order;
-                }
-                throw new Exception("Couldn't Find User");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-               
-            }
-
-            return null;
+            return _orderRepository.CreateOrder(email);
         }
     }
 }
