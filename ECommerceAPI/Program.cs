@@ -31,12 +31,17 @@ builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
 builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddSingleton<IProductPhotoRepository, ProductPhotoRepository>();
 builder.Services.AddSingleton<IProductPhotoService, ProductPhotoService>();
-builder.Services.AddSingleton<ICartService, CartService>();
 
 // Register UserService and UserRepository
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
+// Register CartService with Lazy<IUserService>
+builder.Services.AddSingleton<ICartService>(provider =>
+    new CartService(
+        provider.GetRequiredService<ICartRepository>(),
+        new Lazy<IUserService>(() => provider.GetRequiredService<IUserService>())
+    ));
 
 builder.Services.AddSingleton<ICartRepository, CartRepository>();
 builder.Services.AddSingleton<ICartProductService, CartProductService>();
