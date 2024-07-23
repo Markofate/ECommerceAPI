@@ -16,9 +16,13 @@ namespace Business.Concrete
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productsRepository)
+        private readonly ICartProductRepository _cartProductRepository;
+        private readonly ICartRepository _cartRepository;
+        public ProductService(IProductRepository productsRepository, ICartProductRepository cartProductRepository , ICartRepository cartRepository)
         {
             _productRepository = productsRepository;
+            _cartProductRepository = cartProductRepository;
+            _cartRepository = cartRepository;
         }
         public bool UpdateProduct(Products product)
         {
@@ -44,6 +48,19 @@ namespace Business.Concrete
         public List<Products> GetProductsByCategoryId(int categoryId)
         {
             return _productRepository.GetAll(p=>p.CategoryId==categoryId);
+        }
+
+        public List<Products> GetProductsByUserId(int userId)
+        {
+            userId = 1;//login yapıldıktan sonra kalkmalı
+            var cart = _cartRepository.Get(c => c.UserId == userId);
+            var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
+            var products = new List<Products>();
+            foreach (var product in cartProducts)
+            {
+                products.Add(GetProductById(product.ProductId));
+            }
+            return products;
         }
     }
  }

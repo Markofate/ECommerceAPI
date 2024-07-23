@@ -1,0 +1,119 @@
+.product-detail {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .product-card {
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
+  }
+  
+  .product-image-wrapper {
+    position: relative;
+    flex: 1;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .favorite-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: #ff0000;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .product-info {
+    flex: 2;
+    padding: 20px;
+  }
+  
+  .product-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-tag {
+    display: inline-block;
+    background-color: #e0f7fa;
+    color: #00796b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .product-price {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .product-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .product-options {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .product-label {
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  .product-select {
+    margin-right: 20px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  .product-button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .cart-icon {
+    font-size: 24px;
+    color: black;
+  }
+  
+  .product-faq {
+    margin-top: 20px;
+  }
+  
+  .faq-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .faq-text {
+    font-size: 14px;
+    color: #757575;
+  }
+  

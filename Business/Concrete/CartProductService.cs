@@ -41,6 +41,14 @@ namespace Business.Concrete
             return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
         }
 
+        public List<CartProducts> GetCartProductsByUserId(int userId)
+        {
+            var user = _userRepository.Get(u => u.UserId == userId);
+            var cart = _cartRepository.Get(c => c.UserId == user.UserId);
+
+            return _cartProductRepository.GetAll(cp=>cp.CartId == cart.CartId);
+        }
+
         public CartProducts GetCartProductByProductAndCartId(int cartId, int productId)
         {
             return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);

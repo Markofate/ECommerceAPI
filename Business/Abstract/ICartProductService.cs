@@ -14,5 +14,6 @@ namespace Business.Abstract
         public List<CartProducts> GetCartProductsByCartId(int cartId);
         public CartProducts AddProductToCart(int productId, int quantity, string email);
         public CartProducts RemoveProductFromCart(int productId, string email);
+        public List<CartProducts> GetCartProductsByUserId(int userId);
     }
 }
