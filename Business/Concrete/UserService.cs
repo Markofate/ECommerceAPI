@@ -16,12 +16,11 @@ namespace Business.Concrete
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        private readonly ICartService _cartService;
-        public UserService(IUserRepository userRepository, ICartService cartService)
+        private readonly ICartRepository _cartRepository;
+        public UserService(IUserRepository userRepository, ICartRepository cartRepository)
         {
             _userRepository = userRepository;
-                _cartService = cartService;
+            _cartRepository = cartRepository;
         }
         
         public List<Users> GetUsers()
@@ -63,7 +62,7 @@ namespace Business.Concrete
                         CreatedBy = email, UpdatedBy = email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now
                     };
                     _userRepository.Add(user);
-                    _cartService.CreateCart(email);
+                    _cartRepository.CreateCart(email);
                     return user;
                 }
                 else

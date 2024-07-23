@@ -16,20 +16,20 @@ namespace Business.Concrete
     public class OrderProductService : IOrderProductService
     {
         private readonly IOrderProductRepository _orderProductRepository;
-        private readonly ICartService _cartService;
-        private readonly IProductService _productService;
-        private readonly IUserService _userService;
-        private readonly ICartProductService _cartProductService;
-        private readonly IOrderService _orderService;
-        public OrderProductService(IOrderProductRepository orderProductsRepository, ICartService cartService, IProductService productService, IUserService userService,
-            ICartProductService cartProductService, IOrderService orderService)
+        private readonly ICartRepository _cartRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ICartProductRepository _cartProductRepository;
+        private readonly IOrderRepository _orderRepository;
+        public OrderProductService(IOrderProductRepository orderProductsRepository, ICartRepository cartRepository, IProductRepository productRepository, IUserRepository userRepository,
+            ICartProductRepository cartProductRepository, IOrderRepository orderRepository)
         {
             _orderProductRepository = orderProductsRepository;
-            _cartService = cartService;
-            _productService = productService;
-            _userService = userService;
-            _cartProductService = cartProductService;
-            _orderService = orderService;
+            _cartRepository = cartRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
+            _cartProductRepository = cartProductRepository;
+            _orderRepository = orderRepository;
 
         }
         public List<OrderProducts> GetOrderProducts()
@@ -52,28 +52,28 @@ namespace Business.Concrete
             try
             {
 
-                var user = _userService.GetUserByEmail(email);
-                var cart = _cartService.GetCartByUserId(user.UserId);
-                var cartProducts = _cartProductService.GetCartProductsByCartId(cart.CartId);
-                var order = _orderService.CreateOrder(email);
+                var user = _userRepository.Get(u => u.Email == email);
+                var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
+                var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
+                var order = _orderRepository.CreateOrder(email);
                 List<Products> productsList = null;
                 if (!cartProducts.IsNullOrEmpty())
                 {
                     List<OrderProducts> orderProductList = null;
                     foreach (var cartProduct in cartProducts)
                     {
-                        productsList.Add(_productService.GetProductById(cartProduct.ProductId));
+                        productsList.Add(_productRepository.Get(p=>p.ProductId == cartProduct.ProductId));
                         OrderProducts orderProduct = new OrderProducts()
                         { OrderId = order.OrderId,
                             ProductId = cartProduct.ProductId, Quantity = cartProduct.Quantity, CreatedAt = cartProduct.CreatedAt, UpdatedAt = cartProduct.UpdatedAt,
                             CreatedBy = cartProduct.CreatedBy, UpdatedBy = cartProduct.UpdatedBy 
                         };
 
-                        _cartProductService.RemoveProductFromCart(cartProduct.ProductId, email);
+                        _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
                         foreach (var product in productsList)
                         {
                             product.Stock -= cartProduct.Quantity;
-                            _productService.UpdateProduct(product);
+                            _productRepository.Update(product);
                             
                         }
                         orderProductList.Add(orderProduct);

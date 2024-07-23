@@ -9,5 +9,6 @@ namespace DataAccess.Abstract.Repositories
 {
     public interface ICartProductRepository: IGenericRepository<CartProducts>
     {
+        public CartProducts RemoveProductFromCart(int productId, string email);
     }
 }
