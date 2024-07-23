@@ -43,7 +43,7 @@ const Products = () => {
                   {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
               </div>
             </Link>
-              <i className="pi pi-heart mr-3"></i>
+              <i className="pi pi-heart favorite-icon mr-3"></i>
               <div className="card-body d-flex flex-column">
                
               <Link to={`/product/${product.productId}`}>

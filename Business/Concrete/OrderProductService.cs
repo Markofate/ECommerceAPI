@@ -73,6 +73,7 @@ namespace Business.Concrete
                         foreach (var product in productsList)
                         {
                             product.Stock -= cartProduct.Quantity;
+                            product.Sales += cartProduct.Quantity;
                             _productRepository.Update(product);
                             
                         }

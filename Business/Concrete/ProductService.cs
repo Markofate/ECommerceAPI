@@ -52,7 +52,7 @@ namespace Business.Concrete
 
         public List<Products> GetProductsByUserId(int userId)
         {
-            userId = 1;//login yapıldıktan sonra kalkmalı
+            userId = 1;//login yazıldıktan sonra kalkmalı
             var cart = _cartRepository.Get(c => c.UserId == userId);
             var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
             var products = new List<Products>();
