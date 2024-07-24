@@ -15,7 +15,10 @@ const Products = () => {
       try {
         setLoading(true);
         const response = await axios.get('https://localhost:7227/products');
-        setProducts(response.data);
+
+        const filteredProducts = response.data.filter(product => product.stock > 0);
+        setProducts(filteredProducts);
+        
         setLoading(false);
       } catch (err) {
         setError(err.message);

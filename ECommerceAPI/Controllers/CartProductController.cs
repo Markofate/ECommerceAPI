@@ -25,7 +25,7 @@ namespace ECommerceAPI.Controllers
            }
            else
            {
-               return BadRequest(400);
+               return BadRequest("No Products To show");
            }
         }
         [HttpGet]
@@ -44,7 +44,7 @@ namespace ECommerceAPI.Controllers
         }
         /*
         [HttpGet]
-        [Route("/User/{id}/Cart/Products")]
+        [Route("/User/{id}/Cart/Products")] product controllerda
         public IActionResult GetCartProductsByUserId(int id)
         {
             var content = _cartProductService.GetCartProductsByUserId(id);

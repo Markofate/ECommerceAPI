@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./static/cart.css";
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -15,15 +16,13 @@ const Cart = () => {
       try {
         setLoading(true);
 
-        // İlk API çağrısı: ürün bilgileri
         const productResponse = await axios.get('https://localhost:7227/User/1/Cart/Products');
         const products = productResponse.data;
 
-        // İkinci API çağrısı: sepet bilgileri
-        const cartResponse = await axios.get('https://localhost:7227/cartproducts');//buraya userId eklenmeli büyük bir database de tüm ürünelri kontrol etmek sıkıntı çıkarırı
+      
+        const cartResponse = await axios.get('https://localhost:7227/cartproducts');
         const cartProducts = cartResponse.data;
 
-        // Ürün bilgileri ile sepet bilgilerini birleştir
         const mergedProducts = products.map(product => {
           const cartProduct = cartProducts.find(cp => cp.productId === product.productId);
           return {
@@ -53,6 +52,7 @@ const Cart = () => {
   }, []);
 
   if (loading) return <p>Loading...</p>;
+  if (error=="Request failed with status code 400") return <p>No Products To Show</p>;
   if (error) return <p>Error: {error}</p>;
 
   const total = subtotal + shipping + tax;
@@ -60,7 +60,7 @@ const Cart = () => {
   return (
     <div className='cart-container'>
       <div className='cart-products'>
-        <h1>Basket</h1>
+        <h1 className="pi pi-shopping-cart cart-icon"> Cart</h1>
         <p>{products.length} items</p>
         {products.length === 0 && !loading && <p>No products available</p>}
         {products.map(product => (
@@ -83,7 +83,9 @@ const Cart = () => {
         <p>Shipping: ${shipping.toFixed(2)}</p>
         <p>Tax: ${tax.toFixed(2)}</p>
         <h3>Total: ${total.toFixed(2)}</h3>
-        <button className="btn btn-success">Create Order</button>
+        <Link to={`/create-order`}>
+        <button className="btn btn-success">Continue To Payment</button>
+        </Link>
       </div>
     </div>
   );
