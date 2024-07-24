@@ -40,9 +40,9 @@ namespace Business.Concrete
             return _orderRepository.GetAll(o => o.UserId == id);
         }
 
-        public Orders CreateOrder(string email)
+        public Orders CreateOrder(string email, string address)
         {
-            return _orderRepository.CreateOrder(email);
+            return _orderRepository.CreateOrder(email, address);
         }
     }
 }

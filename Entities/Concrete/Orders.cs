@@ -18,5 +18,6 @@ namespace Entities.Concrete
         public string? Status { get; set; }
         public decimal? TotalAmount { get; set; }
         public string? Currency { get; set; }
+        public string? Address { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace Business.Concrete
             return _orderProductRepository.GetAll(op=>op.OrderId==id);
         }
 
-        public List<OrderProducts> AddProductsToOrder(string email)
+        public List<OrderProducts> AddProductsToOrder(string email, string address)
         {
             try
             {
@@ -55,11 +55,11 @@ namespace Business.Concrete
                 var user = _userRepository.Get(u => u.Email == email);
                 var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
                 var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
-                var order = _orderRepository.CreateOrder(email);
-                List<Products> productsList = null;
+                var order = _orderRepository.CreateOrder(email,address);
+                List<Products> productsList = [];
                 if (!cartProducts.IsNullOrEmpty())
                 {
-                    List<OrderProducts> orderProductList = null;
+                    List<OrderProducts> orderProductList = [];
                     foreach (var cartProduct in cartProducts)
                     {
                         productsList.Add(_productRepository.Get(p=>p.ProductId == cartProduct.ProductId));
@@ -74,7 +74,7 @@ namespace Business.Concrete
                         {
                             product.Stock -= cartProduct.Quantity;
                             product.Sales += cartProduct.Quantity;
-                            _productRepository.Update(product);
+                            _productRepository.Update(product); 
                             
                         }
                         orderProductList.Add(orderProduct);

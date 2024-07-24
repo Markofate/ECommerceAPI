@@ -56,5 +56,13 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(400);
             }
         }
+
+        [HttpPost]
+        [Route("/AddProductsToOrder/{email}/{address}")]
+        public List<OrderProducts> AddProductsToOrder(string email, string address)
+        {
+            return _orderProductService.AddProductsToOrder(email, address);
+        }
+
     }
 }

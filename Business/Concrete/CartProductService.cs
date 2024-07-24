@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -61,20 +62,49 @@ namespace Business.Concrete
                 var user = _userRepository.Get(u=>u.Email==email);
                 var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
                 var product = _productRepository.Get(p=>p.ProductId == productId);
-                if (cart != null)
-                {
+                var cartProducts = GetCartProductsByCartId(cart.CartId);
+                bool isInCart = false;
 
+
+                if (!(cart==null))
+                {
+                    //product halihazırda sepetteyse yeni oluşturmadan quantity arttıracak
                     CartProducts cartProduct = new CartProducts()
                     {
                         CartId = cart.CartId, ProductId = productId, Quantity = quantity, CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now,
                         CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
                     };
-                    _cartProductRepository.Add(cartProduct);
+                    if (cartProducts.Count == 0)
+                    {
+                        _cartProductRepository.Add(cartProduct);
 
-                    cart.TotalAmount += quantity * product.Price;
+                        cart.TotalAmount += quantity * product.Price;
 
-                    return cartProduct;
+                        return cartProduct;
+                    }
+                    foreach (var cp in cartProducts)
+                    {
+                        if (cp.ProductId == productId)
+                        {
+                            isInCart = true;
+                        }
+                        if (isInCart)
+                        {
+                            cp.Quantity += quantity;
+                            _cartProductRepository.Update(cp);
+                            cart.TotalAmount += quantity * product.Price;
+                            return cp;
+                        }
+                    }
+                    if (!isInCart)
+                    {
+                        _cartProductRepository.Add(cartProduct);
+
+                        cart.TotalAmount += quantity * product.Price;
+
+                        return cartProduct;
+                    }
                 }
                 else
                 {

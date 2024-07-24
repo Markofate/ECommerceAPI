@@ -11,6 +11,6 @@ namespace DataAccess.Abstract.Repositories
 {
     public interface IOrderRepository : IGenericRepository<Orders>
     {
-        public Orders CreateOrder(string email);
+        public Orders CreateOrder(string email, string address);
     }
 }

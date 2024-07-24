@@ -19,7 +19,7 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
             _userRepository = userRepository;
             _cartRepository = cartRepository;
         }
-        public Orders CreateOrder(string email)
+        public Orders CreateOrder(string email, string address)
         {
             try
             {
@@ -37,7 +37,8 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
                         Date = DateTime.Now,
                         Currency = cart.Currency,
                         TotalAmount = cart.TotalAmount,
-                        Status = "Order Taken"
+                        Status = "Order Taken",
+                        Address = address
                     };
                     Add(order);
                     return order;
