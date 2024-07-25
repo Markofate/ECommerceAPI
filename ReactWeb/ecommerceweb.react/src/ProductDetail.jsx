@@ -32,17 +32,18 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     try {
       await axios.post(`https://localhost:7227/AddProductToCart/${id}/${email}/${quantity}`);
-      swal(
-        "Added To Cart",
-        "Product Added to Cart Successfully",
-        "success"
-        
-      );
-      
+        swal(
+          "Added To Cart",
+          "Product Added to Cart Successfully",
+          "success"
+        ).then(function() {
+          window.location = "/cart";
+      });
     } catch (err) {
+      
       swal(
         "Failed To Add To Cart",
-        "Couldn't Add Product to Cart",
+        err.message,
         "error"
       );
     }
@@ -60,7 +61,6 @@ const ProductDetail = () => {
       {product && (
         <div className="product-card">
           <div className="product-image-wrapper">
-            <i className="pi pi-heart favorite-icon"></i>
             {product.photos && <img className="product-image" src={product.photos} alt={product.product} />}
           </div>
           <div className="product-info">

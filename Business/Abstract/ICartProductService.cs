@@ -11,6 +11,7 @@ namespace Business.Abstract
     {
         public List<CartProducts> GetCartProducts();
         public CartProducts GetCartProductById(int id);
+        public List<CartProducts> GetCartProductsByEmail(string email);
         public List<CartProducts> GetCartProductsByCartId(int cartId);
         public CartProducts AddProductToCart(int productId, int quantity, string email);
         public CartProducts RemoveProductFromCart(int productId, string email);

@@ -66,7 +66,7 @@ namespace Business.Concrete
                         OrderProducts orderProduct = new OrderProducts()
                         { OrderId = order.OrderId,
                             ProductId = cartProduct.ProductId, Quantity = cartProduct.Quantity, CreatedAt = cartProduct.CreatedAt, UpdatedAt = cartProduct.UpdatedAt,
-                            CreatedBy = cartProduct.CreatedBy, UpdatedBy = cartProduct.UpdatedBy 
+                            CreatedBy = cartProduct.CreatedBy, UpdatedBy = cartProduct.UpdatedBy
                         };
 
                         _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
@@ -84,7 +84,7 @@ namespace Business.Concrete
                 }
                 else
                 {
-                    throw new Exception("Something Went Wrong");
+                    throw new Exception("No Products At Cart");
                 }
             }
             catch (Exception exception)

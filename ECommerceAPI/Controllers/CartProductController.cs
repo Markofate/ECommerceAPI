@@ -42,6 +42,20 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(400);
             }
         }
+        [HttpGet]
+        [Route("CartProducts/{email}")]
+        public IActionResult GetCartProductsByEmail(string email)
+        {
+            var content = _cartProductService.GetCartProductsByEmail(email);
+            if (content != null)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
+            }
+        }
         /*
         [HttpGet]
         [Route("/User/{id}/Cart/Products")] product controllerda
@@ -55,22 +69,44 @@ namespace ECommerceAPI.Controllers
             else
             {
                 return BadRequest(400);
+            }if (email != null)
+            {
+                var content = _cartProductService.AddProductToCart(productId, quantity, email);
+                return Ok(content);
+            }
+            else
+            {
+                return BadRequest(400);
             }
         }*/
 
         [HttpPost("AddProductToCart/{productId}/{email}/{quantity}")]
         public IActionResult AddProductToCart(int productId, int quantity, string email)
         {
-            if (email != null)
+            try
             {
-                return Ok(_cartProductService.AddProductToCart(productId, quantity, email));
+                if (email != null)
+                {
+                    var content = _cartProductService.AddProductToCart(productId, quantity, email);
+                    return Ok(content);
+                }
+                else
+                {
+                    return BadRequest(400);
+                }
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                return BadRequest(400);
+                return BadRequest(new { message = ex.Message });
             }
-            
+            catch (Exception ex)
+            {
+                // Genel hata işleme
+                return StatusCode(500, new { message = "Internal Server Error" });
+            }
         }
+
+
 
         [HttpDelete("RemoveProductFromCart/{productId}/{email}")]
         public IActionResult RemoveProductFromCart(int productId, string email)

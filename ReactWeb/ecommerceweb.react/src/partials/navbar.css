@@ -1,37 +1,66 @@
 /* navbar.css */
 
 header {
-    width: 100%;
-    background-color: #668EFF;
-    padding: 10px 0;
-  }
-  
-  .navbar {
-    padding: 0;
-  }
-  
-  .navbar-brand {
-    color: #FFFFFF;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .navbar-nav .nav-item .nav-link {
-    color: #FFFFFF;
-    margin-right: 15px;
-  }
-  
-  .navbar-nav .nav-item .nav-link:hover {
-    color: #FFD700; /* Hover rengini değiştirin */
-  }
-  
-  .navbar-nav .nav-item.active .nav-link {
-    color: #FFD700; /* Aktif sayfanın rengini değiştirin */
-  }
-  
-  @media (max-width: 767px) {
-    .navbar-nav {
+  width: 100%;
+  background-color: #668EFF;
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Başlık için hafif bir gölge */
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar-brand {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none; /* Linklerin altını kaldırır */
+}
+
+.navbar-nav .nav-item {
+  margin-left: 15px; /* İtemler arasına boşluk ekler */
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: #FFFFFF;
+  font-size: 16px;
+  text-decoration: none; /* Linklerin altını kaldırır */
+  transition: color 0.3s ease; /* Renk geçişi için animasyon */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #FFD700; /* Hover rengini değiştirin */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  color: #FFD700; /* Aktif sayfanın rengini değiştirin */
+  font-weight: bold; /* Aktif sayfada kalın yazı */
+}
+
+.cart-icon {
+  font-size: 1.5rem; /* Sepet ikonunun boyutu */
+  margin-right: 5px; /* Sepet ikonunun sağında boşluk */
+}
+
+.cart-item-count {
+  position: relative;
+  top: -10px;
+  color: black;
+  border-radius: 50%;
+  padding: 0.2rem 0.6rem;
+  font-size:1rem;
+  font-weight: bold; /* Sayı fontunu kalın yapar */
+  display: inline-block; /* Sayının ikonun yanında görünmesi için */
+}
+
+@media (max-width: 767px) {
+  .navbar-nav {
       text-align: center;
-    }
+      margin-top: 10px; /* Mobilde üstten boşluk */
   }
-  
+
+  .navbar-nav .nav-item {
+      margin: 5px 0; /* Mobilde itemler arasına boşluk ekler */
+  }
+}
