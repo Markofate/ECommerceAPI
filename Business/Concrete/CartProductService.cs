@@ -42,9 +42,9 @@ namespace Business.Concrete
             return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
         }
 
-        public List<CartProducts> GetCartProductsByUserId(int userId)
+        public List<CartProducts> GetCartProductsByEmail(string email)
         {
-            var user = _userRepository.Get(u => u.UserId == userId);
+            var user = _userRepository.Get(u => u.Email == email);
             var cart = _cartRepository.Get(c => c.UserId == user.UserId);
 
             return _cartProductRepository.GetAll(cp=>cp.CartId == cart.CartId);
@@ -66,9 +66,8 @@ namespace Business.Concrete
                 bool isInCart = false;
 
 
-                if (!(cart==null))
+                if (cart!=null)
                 {
-                    //product halihazırda sepetteyse yeni oluşturmadan quantity arttıracak
                     CartProducts cartProduct = new CartProducts()
                     {
                         CartId = cart.CartId, ProductId = productId, Quantity = quantity, CreatedAt = DateTime.Now,
@@ -91,10 +90,19 @@ namespace Business.Concrete
                         }
                         if (isInCart)
                         {
-                            cp.Quantity += quantity;
-                            _cartProductRepository.Update(cp);
-                            cart.TotalAmount += quantity * product.Price;
-                            return cp;
+                            var newQuantity = cp.Quantity + quantity;
+                            if (newQuantity <= product.Stock)
+                            {
+                                cp.Quantity = newQuantity;
+                                _cartProductRepository.Update(cp);
+                                cart.TotalAmount += quantity * product.Price;
+                                return cp;
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("No Available Stock");
+                            }
+                            
                         }
                     }
                     if (!isInCart)
@@ -111,8 +119,13 @@ namespace Business.Concrete
                     throw new Exception("Cart Not Found");
                 }
             }
-            catch(Exception exception)
-            { 
+            catch (InvalidOperationException ex)
+            {
+                // Exception'ı tekrar fırlat
+                throw;
+            }
+            catch (Exception exception)
+            {
                 Console.WriteLine(exception);
             }
 
@@ -143,6 +156,11 @@ namespace Business.Concrete
             }
 
             return null;
+        }
+
+        public List<CartProducts> GetCartProductsByUserId(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -56,7 +56,7 @@ const Cart = () => {
   if (error) return <p>Error: {error}</p>;
 
   const total = subtotal + shipping + tax;
-
+  
   return (
     <div className='cart-container'>
       <div className='cart-products'>
@@ -79,9 +79,9 @@ const Cart = () => {
       </div>
       <div className='cart-summary'>
         <h2>Order summary</h2>
-        <p>Subtotal: ${subtotal.toFixed(2)}</p>
-        <p>Shipping: ${shipping.toFixed(2)}</p>
-        <p>Tax: ${tax.toFixed(2)}</p>
+        <p>Subtotal: {subtotal.toFixed(2)}</p>
+        <p>Shipping: {shipping.toFixed(2)}</p>
+        <p>Tax: {tax.toFixed(2)}</p>
         <h3>Total: ${total.toFixed(2)}</h3>
         <Link to={`/create-order`}>
         <button className="btn btn-success">Continue To Payment</button>

@@ -25,8 +25,7 @@ const CreateOrder = () => {
             "Order Created",
             "Order Created Successfully",
             "success"
-            
-          );
+          ).then(()=>window.location = "/products");
           redirect("/products")
       } catch (err) {
         swal(

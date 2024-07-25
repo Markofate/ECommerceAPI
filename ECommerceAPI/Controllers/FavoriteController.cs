@@ -52,10 +52,35 @@ namespace ECommerceAPI.Controllers
             {
                 return Ok(content);
             }
-            else
+            else if (content.Count == 0)
+            {
+                return NoContent();
+            }
             {
                 return BadRequest(400);
             }
+        }
+
+        [HttpPost("/AddToFavorite/{email}/{productId}")]
+        public IActionResult AddToFavorites(string email, int productId)
+        {
+            var favorite = _favoriteService.AddProductToFavorite(email, productId);
+            if (favorite != null)
+            {
+                return Ok(favorite);
+            }
+            return BadRequest("Failed to add product to favorites");
+        }
+
+        [HttpDelete("/RemoveFromFavorite/{email}/{productId}")]
+        public IActionResult RemoveFromFavorites(string email, int productId)
+        {
+            var favorite = _favoriteService.RemoveProductFromFavorites(email, productId);
+            if (favorite != null)
+            {
+                return Ok(favorite);
+            }
+            return BadRequest("Failed to remove product from favorites");
         }
     }
 }
