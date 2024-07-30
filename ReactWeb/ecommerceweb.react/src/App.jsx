@@ -5,6 +5,7 @@ import Cart from './Cart.jsx';
 import CreateOrder from './CreateOrder.jsx';
 import Favorites from "./Favorites.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from './Landing.jsx';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="products" element={< Products/>} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path='/cart' element={<Cart/>}/>

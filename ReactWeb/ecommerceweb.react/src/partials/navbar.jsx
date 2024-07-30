@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './navbar.css';
+import logo from "/src/assets/logo.png";
 
 const Navbar = () => {
     const [itemCount, setItemCount] = useState(0);
@@ -25,7 +26,8 @@ const Navbar = () => {
         <header>
             <div className="navbar navbar-expand-sm">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">ECommerce</a>
+                    <img src={logo} style={{height:40,width:40}} alt="logo" />
+                    <a className="navbar-brand" href="/">ECommerce </a>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
                             <li className="nav-item">
