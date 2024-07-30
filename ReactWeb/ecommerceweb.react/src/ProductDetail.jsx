@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import "./static/productDetail.css";
 import { Button } from 'primereact/button';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 
 const ProductDetail = () => {
@@ -32,7 +32,7 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     try {
       await axios.post(`https://localhost:7227/AddProductToCart/${id}/${email}/${quantity}`);
-        swal(
+        Swal.fire(
           "Added To Cart",
           "Product Added to Cart Successfully",
           "success"
@@ -40,10 +40,9 @@ const ProductDetail = () => {
           window.location = "/cart";
       });
     } catch (err) {
-      
-      swal(
+      Swal.fire(
         "Failed To Add To Cart",
-        err.message,
+        err.response.data.message,
         "error"
       );
     }

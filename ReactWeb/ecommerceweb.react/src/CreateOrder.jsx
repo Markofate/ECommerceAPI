@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './static/createorder.css';
 import { Link, redirect } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateOrder = () => {
   const [email, setEmail] = useState('');
@@ -21,14 +22,14 @@ const CreateOrder = () => {
         
         const response = await axios.post(`https://localhost:7227/AddProductsToOrder/${email}/${address}`);
         console.log('Order created:', response.data);
-        swal(
+        Swal.fire(
             "Order Created",
             "Order Created Successfully",
             "success"
           ).then(()=>window.location = "/products");
           redirect("/products")
       } catch (err) {
-        swal(
+        Swal.fire(
             "Couldn't Create Order",
             "Failed To Create Order",
             "error"
