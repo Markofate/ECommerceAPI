@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import "./static/productDetail.css";
+import Draggable from 'react-draggable';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -63,27 +64,29 @@ const Products = () => {
       <div className='row mt-4'>
         {products.length === 0 && !loading && <p>No products available</p>}
         {products.map(product => (
-          <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
-            <div className='card'>
-              <Link to={`/product/${product.productId}`}>
-                <div id='imageWrapper'>
-                  {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
+          <Draggable defaultPosition={{x: 0, y: 0}} >
+              <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
+                <div className='card'>
+                  <Link to={`/product/${product.productId}`}>
+                    <div id='imageWrapper'>
+                      {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
+                    </div>
+                  </Link>
+                  <i 
+                    className={`pi favorite-icon mr-3 ${favorites.includes(product.productId) ? 'pi-heart-fill' : 'pi-heart'}`} 
+                    style={{ color: favorites.includes(product.productId) ? 'red' : 'black' }}
+                    onClick={() => handleFavoriteToggle(product.productId)}
+                  ></i>
+                  <div className="card-body d-flex flex-column">
+                    <Link to={`/product/${product.productId}`}>
+                      <h3 className='card-title '>{product.product}</h3>
+                    </Link>
+                    <p>Price: {product.price} {product.currency}</p>
+                    <p className='card-text'>Description: {product.description}</p>
+                  </div>
                 </div>
-              </Link>
-              <i 
-                className={`pi favorite-icon mr-3 ${favorites.includes(product.productId) ? 'pi-heart-fill' : 'pi-heart'}`} 
-                style={{ color: favorites.includes(product.productId) ? 'red' : 'black' }}
-                onClick={() => handleFavoriteToggle(product.productId)}
-              ></i>
-              <div className="card-body d-flex flex-column">
-                <Link to={`/product/${product.productId}`}>
-                  <h3 className='card-title '>{product.product}</h3>
-                </Link>
-                <p>Price: {product.price} {product.currency}</p>
-                <p className='card-text'>Description: {product.description}</p>
               </div>
-            </div>
-          </div>
+          </Draggable>
         ))}
       </div>
     </>
