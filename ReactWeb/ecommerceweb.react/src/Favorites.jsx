@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './static/favorites.css';
+import Swal from 'sweetalert2';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -43,15 +44,19 @@ const Favorites = () => {
 
   const handleRemoveFromFavorites = async (productId) => {
     try {
-        await axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);
-        swal({
-            title: "Removed From Favorites",
-            text: "Successfully Removed From Favorites",
-            icon: "success"
-          }).then(()=>window.location = "/favorites");
-        
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to remove the product?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, remove it!"
+      }).then(() => location.reload(),await axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`));
+    
     } catch (err) {
-        swal({
+        Swal.fire({
             title: "Failed To Remove From Favorites",
             text: err.message,
             icon: "error"

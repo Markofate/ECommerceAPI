@@ -25,6 +25,7 @@
     "react-scripts": "^3.0.1",
     "sweetalert": "^2.1.2",
     "sweetalert-react": "^0.4.11",
+    "sweetalert2": "^11.12.3",
     "warning": "^4.0.3"
   },
   "devDependencies": {
