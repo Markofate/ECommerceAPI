@@ -51,10 +51,10 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/User/{id}/Cart/Products")]
-        public List<Products> GetProductsByUsertId(int userId)
+        [Route("/User/{email}/Cart/Products")]
+        public List<Products> GetProductsByUsertId(string email)
         {
-            return _productService.GetProductsByUserId(userId);
+            return _productService.GetProductsByEmail(email);
         }
     }
 }

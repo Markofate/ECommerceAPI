@@ -18,11 +18,13 @@ namespace Business.Concrete
         private readonly IProductRepository _productRepository;
         private readonly ICartProductRepository _cartProductRepository;
         private readonly ICartRepository _cartRepository;
-        public ProductService(IProductRepository productsRepository, ICartProductRepository cartProductRepository , ICartRepository cartRepository)
+        private readonly IUserRepository _userRepository;
+        public ProductService(IProductRepository productsRepository, ICartProductRepository cartProductRepository , ICartRepository cartRepository, IUserRepository userRepository)
         {
             _productRepository = productsRepository;
             _cartProductRepository = cartProductRepository;
             _cartRepository = cartRepository;
+            _userRepository = userRepository;
         }
         public bool UpdateProduct(Products product)
         {
@@ -50,10 +52,10 @@ namespace Business.Concrete
             return _productRepository.GetAll(p=>p.CategoryId==categoryId);
         }
 
-        public List<Products> GetProductsByUserId(int userId)
+        public List<Products> GetProductsByEmail(string email)
         {
-            userId = 1;//login yazıldıktan sonra kalkmalı
-            var cart = _cartRepository.Get(c => c.UserId == userId);
+            var user = _userRepository.Get(u => u.Email == email);
+            var cart = _cartRepository.Get(c => c.UserId == user.UserId);
             var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
             var products = new List<Products>();
             foreach (var product in cartProducts)

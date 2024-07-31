@@ -30,9 +30,10 @@ namespace Business.Concrete
             return _favoriteRepository.Get(f => f.FavoriteId == favoriteId);
         }
 
-        public List<Favorites> GetFavoritesByUserId(int userId)
+        public List<Favorites> GetFavoritesByEmail(string email)
         {
-            return _favoriteRepository.GetAll(f=>f.UserId==userId);
+            var user = _userRepository.Get(u => u.Email == email);
+            return _favoriteRepository.GetAll(f=>f.UserId==user.UserId);
         }
 
         public Favorites GetFavoriteByProductId(int productId)

@@ -1,8 +1,9 @@
-﻿ using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Concrete;
-using ECommerceAPI.ViewModels;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Core.DTOs;
 
 namespace ECommerceAPI.Controllers
 {
@@ -37,12 +38,40 @@ namespace ECommerceAPI.Controllers
 
         [HttpPost]
         [Route("/Register")]
-        public IActionResult Register([FromBody]RegisterViewModel registerViewModel)
+        public IActionResult Register([FromBody] RegisterDTO request)
         {
-            if (true)
+            try
             {
-                return Ok(_userService.Register(registerViewModel.FirstName, registerViewModel.LastName, registerViewModel.Password
-                    , registerViewModel.RePassword, registerViewModel.Email));
+                var user = _userService.Register(request.FirstName, request.LastName, request.Password, request.RePassword, request.Email);
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("/Login")]
+        public IActionResult Login([FromBody] LoginDTO request)
+        {
+            try
+            {
+                var user = _userService.Authenticate(request.Email, request.Password);
+                return Ok(user); // HTTP 200 OK
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Unauthorized(new { message = e.Message }); // HTTP 401 Unauthorized
+            }
+            catch (Exception e)
+            {
+                // Log the exception if needed
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred" });
             }
         }
     }

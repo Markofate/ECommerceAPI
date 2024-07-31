@@ -44,10 +44,10 @@ namespace ECommerceAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("/UserFavorites/{userId}")]
-        public IActionResult GetFavoritesByUserId(int userId)
+        [Route("/UserFavorites/{email}")]
+        public IActionResult GetFavoritesByEmail(string email)
         {
-            var content = _favoriteService.GetFavoritesByUserId(userId);
+            var content = _favoriteService.GetFavoritesByEmail(email);
             if (!content.IsNullOrEmpty())
             {
                 return Ok(content);

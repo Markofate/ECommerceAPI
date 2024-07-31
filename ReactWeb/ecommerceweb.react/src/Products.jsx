@@ -3,14 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import "./static/productDetail.css";
-import Draggable from 'react-draggable';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const email = "kemal@gmail.com"; // Kullanıcı emailini buraya ekleyin
+  const email = localStorage.getItem('email');
 
   useEffect(() => {
     const fetchProductsAndFavorites = async () => {
@@ -25,7 +25,10 @@ const Products = () => {
         setLoading(false);
       }
       try{
-        const favoriteResponse = await axios.get(`https://localhost:7227/UserFavorites/1`); 
+        if (!email) {
+          return;
+        }
+        const favoriteResponse = await axios.get(`https://localhost:7227/UserFavorites/${email}`); 
         if (favoriteResponse.data.length === 0) {return}
         const favoriteProductIds = favoriteResponse.data.map(fav => fav.productId);
         setFavorites(favoriteProductIds);
@@ -42,6 +45,9 @@ const Products = () => {
 
   const handleFavoriteToggle = async (productId) => {
     try {
+      if (!email) {
+        return;
+      }
       let updatedFavorites;
       if (favorites.includes(productId)) {
         await axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);

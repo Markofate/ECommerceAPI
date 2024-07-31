@@ -9,7 +9,7 @@ const Favorites = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const email ="kemal@gmail.com";
+  const email = localStorage.getItem('email');
 
   useEffect(() => {
     const fetchProductsAndFavorites = async () => {
@@ -21,7 +21,7 @@ const Favorites = () => {
         setProducts(filteredProducts);
 
         
-        const favoriteResponse = await axios.get('https://localhost:7227/UserFavorites/1'); // 1 UserId dir loginle paslanmalıdır
+        const favoriteResponse = await axios.get(`https://localhost:7227/UserFavorites/${email}`); // 1 UserId dir loginle paslanmalıdır
         if (favoriteResponse.data.length === 0) {
           setFavorites([]);
           setLoading(false);
@@ -51,7 +51,7 @@ const Favorites = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, remove it!"
       }).then((result) => {
         if (result.isConfirmed) {
           axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);
