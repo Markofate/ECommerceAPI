@@ -64,7 +64,6 @@ const Products = () => {
       <div className='row mt-4'>
         {products.length === 0 && !loading && <p>No products available</p>}
         {products.map(product => (
-          <Draggable defaultPosition={{x: 0, y: 0}} >
               <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
                 <div className='card'>
                   <Link to={`/product/${product.productId}`}>
@@ -86,7 +85,6 @@ const Products = () => {
                   </div>
                 </div>
               </div>
-          </Draggable>
         ))}
       </div>
     </>
