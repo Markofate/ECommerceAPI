@@ -79,7 +79,7 @@ const Products = () => {
                   </Link>
                   <i 
                     className={`pi favorite-icon mr-3 ${favorites.includes(product.productId) ? 'pi-heart-fill' : 'pi-heart'}`} 
-                    style={{ color: favorites.includes(product.productId) ? 'red' : 'black' }}
+                    style={{ cursor:'pointer',backgroundColor: 'transparent', color: favorites.includes(product.productId) ? 'red' : 'black' }}
                     onClick={() => handleFavoriteToggle(product.productId)}
                   ></i>
                   <div className="card-body d-flex flex-column">
