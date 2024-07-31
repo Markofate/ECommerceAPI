@@ -1,7 +1,4 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
 

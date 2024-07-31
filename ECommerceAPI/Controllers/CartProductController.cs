@@ -1,7 +1,4 @@
-﻿using System.Net.Mail;
-using Business.Abstract;
-using Business.Concrete;
-using Entities.Concrete;
+﻿using Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 

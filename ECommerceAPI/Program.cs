@@ -3,10 +3,7 @@ using Business.Concrete;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Repositories;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ConnectingApps.SmartInject;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,4 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Abstract.Repositories;
-using DataAccess.Concrete;
-using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
