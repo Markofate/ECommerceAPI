@@ -19,7 +19,6 @@ const CreateOrder = () => {
     setError(null);
 
     try {
-        
         const response = await axios.post(`https://localhost:7227/AddProductsToOrder/${email}/${address}`);
         console.log('Order created:', response.data);
         Swal.fire(

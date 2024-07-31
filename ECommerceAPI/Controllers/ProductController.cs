@@ -1,8 +1,4 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Abstract.Repositories;
-using DataAccess.Concrete;
-using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -51,10 +47,10 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/User/{id}/Cart/Products")]
-        public List<Products> GetProductsByUsertId(int userId)
+        [Route("/User/{email}/Cart/Products")]
+        public List<Products> GetProductsByUsertId(string email)
         {
-            return _productService.GetProductsByUserId(userId);
+            return _productService.GetProductsByEmail(email);
         }
     }
 }

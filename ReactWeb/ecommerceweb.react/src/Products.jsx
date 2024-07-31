@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import "./static/productDetail.css";
 
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const email = "kemal@gmail.com"; // Kullanıcı emailini buraya ekleyin
+  const email = localStorage.getItem('email');
 
   useEffect(() => {
     const fetchProductsAndFavorites = async () => {
@@ -24,7 +25,10 @@ const Products = () => {
         setLoading(false);
       }
       try{
-        const favoriteResponse = await axios.get(`https://localhost:7227/UserFavorites/1`); 
+        if (!email) {
+          return;
+        }
+        const favoriteResponse = await axios.get(`https://localhost:7227/UserFavorites/${email}`); 
         if (favoriteResponse.data.length === 0) {return}
         const favoriteProductIds = favoriteResponse.data.map(fav => fav.productId);
         setFavorites(favoriteProductIds);
@@ -41,6 +45,9 @@ const Products = () => {
 
   const handleFavoriteToggle = async (productId) => {
     try {
+      if (!email) {
+        return;
+      }
       let updatedFavorites;
       if (favorites.includes(productId)) {
         await axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);
@@ -63,27 +70,27 @@ const Products = () => {
       <div className='row mt-4'>
         {products.length === 0 && !loading && <p>No products available</p>}
         {products.map(product => (
-          <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
-            <div className='card'>
-              <Link to={`/product/${product.productId}`}>
-                <div id='imageWrapper'>
-                  {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
+              <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
+                <div className='card'>
+                  <Link to={`/product/${product.productId}`}>
+                    <div id='imageWrapper'>
+                      {product.photos && <img className="card-img-top mb-2" id='productPhoto' src={product.photos} alt={product.product}></img>}
+                    </div>
+                  </Link>
+                  <i 
+                    className={`pi favorite-icon mr-3 ${favorites.includes(product.productId) ? 'pi-heart-fill' : 'pi-heart'}`} 
+                    style={{ color: favorites.includes(product.productId) ? 'red' : 'black' }}
+                    onClick={() => handleFavoriteToggle(product.productId)}
+                  ></i>
+                  <div className="card-body d-flex flex-column">
+                    <Link to={`/product/${product.productId}`}>
+                      <h3 className='card-title '>{product.product}</h3>
+                    </Link>
+                    <p>Price: {product.price} {product.currency}</p>
+                    <p className='card-text'>Description: {product.description}</p>
+                  </div>
                 </div>
-              </Link>
-              <i 
-                className={`pi favorite-icon mr-3 ${favorites.includes(product.productId) ? 'pi-heart-fill' : 'pi-heart'}`} 
-                style={{ color: favorites.includes(product.productId) ? 'red' : 'black' }}
-                onClick={() => handleFavoriteToggle(product.productId)}
-              ></i>
-              <div className="card-body d-flex flex-column">
-                <Link to={`/product/${product.productId}`}>
-                  <h3 className='card-title '>{product.product}</h3>
-                </Link>
-                <p>Price: {product.price} {product.currency}</p>
-                <p className='card-text'>Description: {product.description}</p>
               </div>
-            </div>
-          </div>
         ))}
       </div>
     </>

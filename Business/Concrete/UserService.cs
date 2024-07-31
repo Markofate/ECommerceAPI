@@ -22,24 +22,24 @@ namespace Business.Concrete
             _userRepository = userRepository;
             _cartRepository = cartRepository;
         }
-        
+
         public List<Users> GetUsers()
         {
-           return _userRepository.GetAll();
+            return _userRepository.GetAll();
         }
 
         public Users GetUserById(int id)
         {
-            return _userRepository.Get(ui=>ui.UserId==id);
+            return _userRepository.Get(ui => ui.UserId == id);
         }
         public Users GetUserByEmail(string email)
         {
-            return _userRepository.Get(u=>u.Email==email);
+            return _userRepository.Get(u => u.Email == email);
         }
 
         public List<string> GetUserEmails()
         {
-            return _userRepository.GetAll().Select(u=>u.Email).ToList();
+            return _userRepository.GetAll().Select(u => u.Email).ToList();
         }
 
         public Users Register(string firstName, string lastName, string password, string rePassword, string email)
@@ -54,75 +54,53 @@ namespace Business.Concrete
                 {
                     throw new Exception("Email is Already Used");
                 }
+                if (password != rePassword)
+                {
+                    throw new Exception("Passwords Do Not Match");
+                }
                 if (password == rePassword)
                 {
                     Users user = new Users()
                     {
-                        FirstName = firstName, LastName = lastName, Email = email, Password = password,
-                        CreatedBy = email, UpdatedBy = email, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Email = email,
+                        Password = password,
+                        CreatedBy = email,
+                        UpdatedBy = email,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
                     };
                     _userRepository.Add(user);
                     _cartRepository.CreateCart(email);
                     return user;
                 }
-                else
-                {
-                    throw new Exception("Passwords Do Not Match");
-                }
+
+                
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                throw e;
             }
 
             return null;
         }
 
-        public bool Login(string email,string password)
+        public Users Authenticate(string email, string password)
         {
             try
             {
                 var user = GetUserByEmail(email);
-                if (user != null)
+                if (user != null && user.Password == password)
                 {
-                    if (user.Password==password)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        throw new Exception("Password Or Email Is Wrong");
-                    }
+                    return user;
                 }
-                else
-                {
-                    throw new Exception("Couldn't Find User");
-                }
-                
+                throw new UnauthorizedAccessException("Incorrect Email or Password");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                    throw e;
             }
-
-            return false;
-        }
-
-        public bool Logout(string email)
-        {
-
-            try
-            {
-                var user = GetUserByEmail(email);
-                //logout kodu
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return false;
         }
     }
 }

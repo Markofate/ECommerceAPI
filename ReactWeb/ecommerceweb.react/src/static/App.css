@@ -38,21 +38,21 @@
 .card p {
   margin: 0;
 }
-.card .pi-heart {
+.card.pi-heart {
   color: #E91E63;
   cursor: pointer;
   background-color: transparent;
 }
-.card .pi-heart-fill {
+.card.pi-heart-fill {
   background-color: transparent;
   color: #ec1616;
 }
-.card .pi-heart-fill:hover{
+.card.pi-heart-fill:hover{
   background-color: transparent;
   color: #ec1616;
   cursor: pointer;
 }
 
-.card .pi-heart:hover {
+.card.pi-heart:hover {
   color: #FF4081;
 }

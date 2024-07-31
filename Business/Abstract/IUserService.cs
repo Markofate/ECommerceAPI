@@ -16,5 +16,7 @@ namespace Business.Abstract
         public List<string> GetUserEmails();
         public Users Register(string firstName, string lastName, string password, string rePassword,
             string email);
+
+        public Users Authenticate(string email, string password);
     }
 }

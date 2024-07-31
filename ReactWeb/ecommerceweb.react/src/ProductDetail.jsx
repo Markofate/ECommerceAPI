@@ -12,7 +12,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const email = "kemal@gmail.com";//user emaili veya userIdsi gerek
+  const email = localStorage.getItem('email');
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -40,11 +40,20 @@ const ProductDetail = () => {
           window.location = "/cart";
       });
     } catch (err) {
-      Swal.fire(
-        "Failed To Add To Cart",
-        err.response.data.message,
-        "error"
-      );
+      if(!email){
+        Swal.fire(
+          "Failed To Add To Cart",
+          "You Should Login First",
+          "error"
+        );
+      }else
+      {
+        Swal.fire(
+          "Failed To Add To Cart",
+          err.response.data.message,
+          "error"
+          );
+      }
     }
   };
 
