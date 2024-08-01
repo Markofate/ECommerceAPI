@@ -88,4 +88,15 @@ body {
     font-size: 1em;
     color: #666;
   }
+
+  i.pi{
+    font-size: 2em;
+    color :black;
+  }
+  i.pi.pi-align-right{
+    font-size: 1.75em;
+  }
+  i.pi.pi-truck{
+    margin-left: 1px;
+  }
   

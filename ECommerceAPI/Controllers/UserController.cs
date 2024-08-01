@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
+using Entities.Concrete;
+using Azure.Core;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
 {
@@ -33,6 +36,39 @@ namespace ECommerceAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Route("/User/Profile/{email}")]
+        public IActionResult GetUserByEmail(string email)
+        {
+            if (email == null)
+            {
+                return BadRequest(400);
+            }
+            else
+            {
+                return Ok(_userService.GetUserByEmail(email));
+            }
+
+        }
+
+        [HttpPut]
+        [Route("/User/Update")]
+        public IActionResult UpdateUser([FromBody]UpdateUserDTO updateUserDTO)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(updateUserDTO.FirstName) || string.IsNullOrEmpty(updateUserDTO.LastName) || string.IsNullOrEmpty(updateUserDTO.Email))
+                {
+                    return BadRequest("Firstname, Lastname, and Email are required");
+                }
+                _userService.UpdateUser(updateUserDTO.FirstName, updateUserDTO.LastName, updateUserDTO.Email);
+                return Ok("User Successfully Updated");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         [HttpPost]
         [Route("/Register")]
         public IActionResult Register([FromBody] RegisterDTO request)
