@@ -42,10 +42,10 @@ namespace ECommerceAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("/OrderProducts/{id}")]
-        public IActionResult GetOrderProductsByOrderId(int id)
+        [Route("/OrderProducts/{Orderid}")]
+        public IActionResult GetOrderProductsByOrderId(int Orderid)
         {
-            var content = _orderProductService.GetOrderProductsByOrderId(id);
+            var content = _orderProductService.GetOrderProductsByOrderId(Orderid);
             if (!content.IsNullOrEmpty())
             {
                 return Ok(content);

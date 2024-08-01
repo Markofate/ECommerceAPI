@@ -30,11 +30,11 @@ header {
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-  color: #FFD700; /* Hover rengini değiştirin */
+  color: #c5c5c5; /* Hover rengini değiştirin */
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  color: #FFD700; /* Aktif sayfanın rengini değiştirin */
+  color: #FFFFFF; /* Aktif sayfanın rengini değiştirin */
   font-weight: bold; /* Aktif sayfada kalın yazı */
 }
 
@@ -50,6 +50,7 @@ header {
   border-radius: 50%;
   padding: 0.2rem 0.6rem;
   font-size:1rem;
+  margin-left: 0;
   font-weight: bold; /* Sayı fontunu kalın yapar */
   display: inline-block; /* Sayının ikonun yanında görünmesi için */
 }
@@ -65,4 +66,8 @@ header {
 }
 button.btn.btn-secondary{
   width: 6em;
+}
+i.pi.pi-shopping-cart.cart-icon{
+  cursor: pointer;
+  margin-right: 1px
 }
