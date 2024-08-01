@@ -68,6 +68,7 @@ namespace Business.Concrete
                             ProductId = cartProduct.ProductId, Quantity = cartProduct.Quantity, CreatedAt = cartProduct.CreatedAt, UpdatedAt = cartProduct.UpdatedAt,
                             CreatedBy = cartProduct.CreatedBy, UpdatedBy = cartProduct.UpdatedBy
                         };
+                        _orderProductRepository.Add(orderProduct);
 
                         _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
                         foreach (var product in productsList)

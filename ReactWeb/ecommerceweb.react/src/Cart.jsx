@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./static/cart.css";
 import Swal from 'sweetalert2';
 import 'primeicons/primeicons.css';
+import Draggable from 'react-draggable';
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -50,7 +51,7 @@ const Cart = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [email]);
 
   const handleClick = () =>{
     if(products.length === 0){
@@ -78,9 +79,8 @@ const Cart = () => {
         if (result.isConfirmed) {
           axios.delete(`https://localhost:7227/RemoveProductFromCart/${productId}/${email}`);
           setProducts(products.filter(product => product.productId !== productId));
-          location.reload();
         }
-      });
+      }).then(()=>location.reload());
     } catch (error) {
         console.error('Error removing product from cart:', error);
     }

@@ -37,6 +37,31 @@ namespace Business.Concrete
             return _userRepository.Get(u => u.Email == email);
         }
 
+        public Users UpdateUser(string firstname, string lastname, string email)
+        {
+            try
+            {
+                var user = _userRepository.Get(u => u.Email == email);
+                if (user != null)
+                {
+                    user.FirstName = firstname;
+                    user.LastName = lastname;
+                    _userRepository.Update(user);
+                    return user;
+                }
+                else
+                {
+                    throw new Exception("Couldn't Find User");
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public List<string> GetUserEmails()
         {
             return _userRepository.GetAll().Select(u => u.Email).ToList();
@@ -76,7 +101,7 @@ namespace Business.Concrete
                     return user;
                 }
 
-                
+
             }
             catch (Exception e)
             {
@@ -99,7 +124,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                    throw e;
+                throw e;
             }
         }
     }

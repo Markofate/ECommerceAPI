@@ -5,13 +5,13 @@ import { Link, redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const CreateOrder = () => {
-  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCVC, setCardCVC] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const email = localStorage.getItem('email');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,16 +45,6 @@ const CreateOrder = () => {
     <div className="create-order-container">
       <h1>Create Order</h1>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
         <div className="form-group">
           <label htmlFor="address">Address:</label>
           <input

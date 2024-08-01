@@ -1,5 +1,6 @@
 import React from 'react';
-import './static/landing.css'; // Yeni CSS yolunu import ettik
+import './static/landing.css';
+import 'primeicons/primeicons.css';
 
 function Landing() {
   const handleButtonClick = () => {
@@ -16,15 +17,16 @@ function Landing() {
       </header>
       <section className="landing-content">
         <div className="feature">
-          <h2>Geniş Ürün Yelpazesi</h2>
+        <i className='pi pi-list-check'></i>
           <p>Çeşit çeşit ürünlerle ihtiyacınıza uygun seçenekler sunuyoruz.</p>
         </div>
         <div className="feature">
-          <h2>Güvenli Alışveriş</h2>
+          <i className='pi pi-align-right'></i>
+          <i className='pi pi-truck'></i>
           <p>Güvenli ödeme yöntemleri ve hızlı kargo seçenekleri.</p>
         </div>
         <div className="feature">
-          <h2>24/7 Müşteri Desteği</h2>
+        <i className='pi pi-info-circle'></i>
           <p>Her zaman destek için buradayız. Sorularınız için bize ulaşabilirsiniz.</p>
         </div>
       </section>
