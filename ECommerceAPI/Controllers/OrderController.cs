@@ -28,10 +28,10 @@ namespace ECommerceAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("/Order/{id}")]
-        public IActionResult GetOrdersById(int id)
+        [Route("/Order/{orderId}")]
+        public IActionResult GetOrderById(int orderId)
         {
-            var content = _orderService.GetOrderById(id);
+            var content = _orderService.GetOrderById(orderId);
             if (content != null)
             {
                 return Ok(content);
@@ -42,10 +42,10 @@ namespace ECommerceAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("/User/{id}/order")]
-        public IActionResult GetOrdersByUserId(int id)
+        [Route("/User/{email}/orders")]
+        public IActionResult GetOrdersByUserEmail(string email)
         {
-            var content = _orderService.GetOrdersByUserId(id);
+            var content = _orderService.GetOrdersByUserEmail(email);
             if (!content.IsNullOrEmpty())
             {
                 return Ok(content);

@@ -73,7 +73,7 @@ const ProductDetail = () => {
           </div>
           <div className="product-info">
             <h2 className="product-title">{product.product}</h2>
-            <p className="product-price">${product.price}</p>
+            <p className="product-price">{product.price}<i className='pi pi-turkish-lira' style={{fontSize:'0.75em'}}></i></p>
             <p className="product-text">{product.description}</p>
             <div className="product-options">
               <label className="product-label">Quantity</label>
@@ -85,10 +85,6 @@ const ProductDetail = () => {
             </div>
             <Button className="product-button" label='Add To Cart' onClick={handleAddToCart}/>
             <i className="pi pi-shopping-cart cart-icon"></i>
-            <div className="product-faq">
-              <h4 className="faq-title">Title</h4>
-              <p className="faq-text">Answer the frequently asked question in a simple sentence, a longish paragraph, or even in a list.</p>
-            </div>
           </div>
         </div>
       )}

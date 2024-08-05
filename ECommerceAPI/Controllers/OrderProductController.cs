@@ -52,7 +52,7 @@ namespace ECommerceAPI.Controllers
             }
             else
             {
-                return BadRequest(400);
+                return BadRequest("bad orderproduct request");
             }
         }
 

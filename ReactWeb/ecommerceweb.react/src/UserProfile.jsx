@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./static/userprofile.css";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const UserProfile = () => {
   const [firstName, setFirstName] = useState('');
@@ -90,6 +91,10 @@ const UserProfile = () => {
           <button onClick={() => setEditMode(false)} className="btn btn-secondary">Cancel</button>
         </form>
       )}
+      <div className="orders-section">
+        <h2>My Orders</h2>
+        <Link to="/orders" className="btn btn-secondary">View Orders</Link>
+      </div>
     </div>
   );
 };
