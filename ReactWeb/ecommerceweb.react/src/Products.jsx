@@ -103,7 +103,7 @@ const Products = () => {
         <div className='row mt-4'>
           {filteredProducts.length === 0 && !loading && <p>No products available</p>}
           {filteredProducts.map(product => (
-            <div className="col-2 mb-2 d-flex align-items-stretch" key={product.productId}>
+            <div className="col-2 mb-2 align-items-stretch" key={product.productId}>
               <div className='card'>
                 <Link to={`/product/${product.productId}`}>
                   <div id='imageWrapper'>
