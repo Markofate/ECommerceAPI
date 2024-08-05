@@ -15,10 +15,12 @@ namespace Business.Concrete
     public class OrderService:IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
         
-        public OrderService(IOrderRepository ordersRepository)
+        public OrderService(IOrderRepository ordersRepository, IUserRepository userRepository)
         {
             _orderRepository = ordersRepository;
+            _userRepository = userRepository;
         }
         
         public List<Orders> GetOrders()
@@ -35,9 +37,10 @@ namespace Business.Concrete
             return _orderRepository.Get(o => o.UserId == id);
         }
 
-        public List<Orders> GetOrdersByUserId(int id)
+        public List<Orders> GetOrdersByUserEmail(string email)
         {
-            return _orderRepository.GetAll(o => o.UserId == id);
+            var user = _userRepository.Get(u => u.Email == email);
+            return _orderRepository.GetAll(o => o.UserId == user.UserId);
         }
 
         public Orders CreateOrder(string email, string address)

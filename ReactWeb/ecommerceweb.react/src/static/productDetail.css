@@ -28,17 +28,6 @@
   max-height: 100%;
 }
 
-.favorite-icon {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 24px;
-  color: #333;
-  background-color: white;
-  border-radius: 50%;
-  padding: 5px;
-}
-
 .product-info {
   flex: 2;
   padding: 20px;
@@ -47,15 +36,6 @@
 .product-title {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.product-tag {
-  display: inline-block;
-  background-color: #e0f7fa;
-  color: #00796b;
-  padding: 5px 10px;
-  border-radius: 5px;
   margin-bottom: 10px;
 }
 
@@ -103,20 +83,6 @@
   color: black;
 }
 
-.product-faq {
-  margin-top: 20px;
-}
-
-.faq-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.faq-text {
-  font-size: 14px;
-  color: #757575;
-}
 .product-image-wrapper .pi-heart {
   color: #E91E63;
   font-size: 20px;

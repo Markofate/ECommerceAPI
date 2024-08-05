@@ -57,6 +57,7 @@ namespace Business.Concrete
                 var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
                 var order = _orderRepository.CreateOrder(email,address);
                 List<Products> productsList = [];
+                decimal? totalAmount = 0;
                 if (!cartProducts.IsNullOrEmpty())
                 {
                     List<OrderProducts> orderProductList = [];
@@ -70,14 +71,18 @@ namespace Business.Concrete
                         };
                         _orderProductRepository.Add(orderProduct);
 
+
                         _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
                         foreach (var product in productsList)
                         {
                             product.Stock -= cartProduct.Quantity;
                             product.Sales += cartProduct.Quantity;
-                            _productRepository.Update(product); 
-                            
+                            _productRepository.Update(product);
+
+                            totalAmount += product.Price * cartProduct.Quantity;
                         }
+                        order.TotalAmount = totalAmount; // Update order total amount
+                        _orderRepository.Update(order);
                         orderProductList.Add(orderProduct);
                     }
 

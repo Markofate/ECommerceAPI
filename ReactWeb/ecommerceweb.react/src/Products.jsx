@@ -52,7 +52,7 @@ const Products = () => {
 
   const handleCategorySelect = (categoryId) => {
     setSelectedCategory(categoryId);
-    if (categoryId === null) {
+    if (categoryId === 0) {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter(product => product.categoryId === categoryId);
@@ -87,7 +87,7 @@ const Products = () => {
       <div className='category-menu'>
         <h3>Categories</h3>
         <ul>
-          <li onClick={() => handleCategorySelect(null)} className={!selectedCategory ? 'selected' : ''}>All</li>
+          <li onClick={() => handleCategorySelect(0)} className={!selectedCategory ? 'selected' : ''}>All</li>
           {categories.map(category => (
             <li 
               key={category.categoryId} 

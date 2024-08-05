@@ -12,7 +12,7 @@ namespace Business.Abstract
         public Orders CreateOrder(string email, string address);
         public List<Orders> GetOrders();
         public Orders GetOrderById(int id);
-        public List<Orders> GetOrdersByUserId(int id);
+        public List<Orders> GetOrdersByUserEmail(string email);
     }
 }
 

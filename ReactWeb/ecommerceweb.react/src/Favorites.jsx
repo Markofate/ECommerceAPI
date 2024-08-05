@@ -44,7 +44,7 @@ const Favorites = () => {
 
   const handleRemoveFromFavorites = async (productId) => {
     try {
-      Swal.fire({
+      const result = await Swal.fire({
         title: "Are you sure?",
         text: "Do you want to remove the product?",
         icon: "warning",
@@ -52,22 +52,24 @@ const Favorites = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, remove it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);
-           location.reload();
-        }
       });
-      
-    } catch (err) {
+      if (result.isConfirmed) {
+        await axios.delete(`https://localhost:7227/RemoveFromFavorite/${email}/${productId}`);
         Swal.fire({
-            title: "Failed To Remove From Favorites",
-            text: err.message,
-            icon: "error"
-          })
+          title: "Removed!",
+           text:"The product has been removed from favorites.",
+            icon:"success"
+          }).then(()=>location.reload());
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Failed To Remove From Favorites",
+        text: err.message,
+        icon: "error"
+      });
       console.error('Failed to remove product from favorites', err);
     }
-  };
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;

@@ -127,7 +127,7 @@ const Cart = () => {
         <p>Subtotal: {subtotal.toFixed(2)}</p>
         <p>Shipping: {shipping.toFixed(2)}</p>
         <p>Tax: {tax.toFixed(2)}</p>
-        <h3>Total: ${total.toFixed(2)}</h3>
+        <h3>Total: {total.toFixed(2)}</h3>
         <button className="btn btn-success" onClick={handleClick}>Continue To Payment</button>
       </div>
     </div>
