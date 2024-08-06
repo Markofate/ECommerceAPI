@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
 using Entities.Concrete;
 using Azure.Core;
-using Hangfire;
-using Hangfire.Annotations;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceAPI.Controllers
@@ -72,21 +70,15 @@ namespace ECommerceAPI.Controllers
             }
         }
 
-        public void SendWelcomeEmail()
-        {
-            //Welcome mail işlemleri eklenebilir
-        }
         [HttpPost]
         [Route("/Register")]
         public IActionResult Register([FromBody] RegisterDTO request)
         {
-            
             try
             {
                 var user = _userService.Register(request.FirstName, request.LastName, request.Password, request.RePassword, request.Email);
                 if (user != null)
                 {
-                    BackgroundJob.Enqueue(() => SendWelcomeEmail());
                     return Ok(user);
                 }
 
