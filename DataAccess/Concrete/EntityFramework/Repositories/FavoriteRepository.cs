@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract.Repositories;
-using Entities.Conrete;
+using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework.Repositories
 {

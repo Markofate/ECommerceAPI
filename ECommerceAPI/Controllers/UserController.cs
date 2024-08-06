@@ -41,27 +41,25 @@ namespace ECommerceAPI.Controllers
         public IActionResult GetUserByEmail(string email)
         {
             if (email == null)
-            {
+            { 
                 return BadRequest(400);
             }
-            else
-            {
-                return Ok(_userService.GetUserByEmail(email));
-            }
+
+            return Ok(_userService.GetUserByEmail(email));
 
         }
 
         [HttpPut]
         [Route("/User/Update")]
-        public IActionResult UpdateUser([FromBody]UpdateUserDTO updateUserDTO)
+        public IActionResult UpdateUser([FromBody]UpdateUserDTO updateUserDto)
         {
             try
             {
-                if (string.IsNullOrEmpty(updateUserDTO.FirstName) || string.IsNullOrEmpty(updateUserDTO.LastName) || string.IsNullOrEmpty(updateUserDTO.Email))
+                if (string.IsNullOrEmpty(updateUserDto.FirstName) || string.IsNullOrEmpty(updateUserDto.LastName) || string.IsNullOrEmpty(updateUserDto.Email))
                 {
                     return BadRequest("Firstname, Lastname, and Email are required");
                 }
-                _userService.UpdateUser(updateUserDTO.FirstName, updateUserDTO.LastName, updateUserDTO.Email);
+                _userService.UpdateUser(updateUserDto.FirstName, updateUserDto.LastName, updateUserDto.Email);
                 return Ok("User Successfully Updated");
             }
             catch (Exception e)
@@ -77,12 +75,7 @@ namespace ECommerceAPI.Controllers
             try
             {
                 var user = _userService.Register(request.FirstName, request.LastName, request.Password, request.RePassword, request.Email);
-                if (user != null)
-                {
-                    return Ok(user);
-                }
-
-                return null;
+                return Ok(user);
             }
             catch (Exception e)
             {
