@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Concrete;
-using Entities.Conrete;
 
 namespace Business.Abstract
 {

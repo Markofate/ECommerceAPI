@@ -30,7 +30,7 @@ namespace ECommerceAPI.Controllers
             
             
         }
-        [HttpGet]
+        [HttpGet]   
         [Route("/product/{id}")]
         public IActionResult GetProductById(int id)
         {

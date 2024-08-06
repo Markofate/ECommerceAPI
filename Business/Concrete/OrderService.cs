@@ -8,7 +8,6 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
-using Entities.Conrete;
 
 namespace Business.Concrete
 {
