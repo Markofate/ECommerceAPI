@@ -3,9 +3,7 @@ using Business.Concrete;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Repositories;
-using Hangfire;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,12 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ECommerceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddHangfire(x =>
-    x.UseSqlServerStorage(
-        "Server = KEMAL-KUNT\\MSSQLSERVER01; Database = Hangfire; Trusted_Connection = True; TrustServerCertificate = True"));
-
-builder.Services.AddHangfireServer();
-
 
 
 builder.Services.AddSingleton<IProductService, ProductService>();
@@ -65,7 +57,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseHangfireDashboard("/hangfire");
 app.UseCors("AllowAll");
 
 using (var scope = app.Services.CreateScope())
