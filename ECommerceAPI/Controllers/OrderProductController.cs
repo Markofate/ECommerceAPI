@@ -7,7 +7,7 @@ namespace ECommerceAPI.Controllers
 {
     public class OrderProductController : Controller
     {
-        IOrderProductService _orderProductService;
+        private readonly IOrderProductService _orderProductService;
 
         public OrderProductController(IOrderProductService orderProductsService)
         {

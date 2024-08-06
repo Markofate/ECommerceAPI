@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Concrete;
 
-namespace Entities.Conrete
+namespace Entities.Concrete
 {
     public class Favorites : BaseEntity
     {
