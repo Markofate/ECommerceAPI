@@ -33,8 +33,12 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 optionsBuilder.UseSqlServer(
                     "Server=KEMAL-KUNT\\MSSQLSERVER01;Database=ECommerce;Trusted_Connection=True;TrustServerCertificate=True");
+
+                // optionsBuilder.UseSqlServer("Server=127.0.0.1,1433;Database=ECommerce;User Id=SA;Password=P@ssw0rd123;TrustServerCertificate=True");
+                //sql koneyner servere bağlanmak için kulanılacak 
             }
         }
+        
 
     }
 
