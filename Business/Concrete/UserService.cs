@@ -46,14 +46,13 @@ namespace Business.Concrete
                 {
                     user.FirstName = firstname;
                     user.LastName = lastname;
+                    user.UpdatedAt = DateTime.Now;
+                    user.UpdatedBy = firstname + lastname;
                     _userRepository.Update(user);
                     return user;
                 }
-                else
-                {
-                    throw new Exception("Couldn't Find User");
-                    return null;
-                }
+                throw new Exception("Couldn't Find User");
+
             }
             catch (Exception e)
             {
