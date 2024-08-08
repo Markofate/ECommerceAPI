@@ -92,7 +92,7 @@ namespace Business.Concrete
                 if (user != null && favorite != null)
                 {
                     _favoriteRepository.Delete(favorite);
-                    Log.Information("Favorite Removed By: {@email}", email);
+                    Log.Information("Favorite {@favorite} Removed By: {@email}", favorite,email);
                     return favorite;
                 }
                 else
