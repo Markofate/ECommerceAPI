@@ -80,27 +80,12 @@ namespace ECommerceAPI.Controllers
         [HttpPost("AddProductToCart/{productId}/{email}/{quantity}")]
         public IActionResult AddProductToCart(int productId, int quantity, string email)
         {
-            try
-            {
                 if (email != null)
                 {
                     var content = _cartProductService.AddProductToCart(productId, quantity, email);
                     return Ok(content);
                 }
-                else
-                {
-                    return BadRequest(400);
-                }
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                // Genel hata işleme
-                return StatusCode(500, new { message = "Internal Server Error" });
-            }
+                return BadRequest();
         }
 
 

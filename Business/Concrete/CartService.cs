@@ -8,6 +8,7 @@ using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.Identity.Client;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -37,7 +38,18 @@ namespace Business.Concrete
 
         public Carts CreateCart(string email)
         {
-            return _cartRepository.CreateCart(email);
+            try
+            {
+                Log.Warning("New Cart Created By: {@email}",email);
+                return _cartRepository.CreateCart(email);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
     }
 }

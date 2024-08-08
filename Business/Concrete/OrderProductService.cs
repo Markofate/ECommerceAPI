@@ -9,6 +9,7 @@ using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -50,7 +51,6 @@ namespace Business.Concrete
         {
             try
             {
-
                 var user = _userRepository.Get(u => u.Email == email);
                 var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
                 var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
@@ -92,9 +92,10 @@ namespace Business.Concrete
                     throw new Exception("No Products At Cart");
                 }
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                Console.WriteLine(exception);  
+                Log.Error("Error Occured: {@e}", e);
+                Console.WriteLine(e);  
             }
 
             return null;   

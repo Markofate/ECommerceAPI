@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using System.Linq.Expressions;
+using Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
 using Entities.Concrete;
@@ -53,53 +54,37 @@ namespace ECommerceAPI.Controllers
         [Route("/User/Update")]
         public IActionResult UpdateUser([FromBody]UpdateUserDTO updateUserDto)
         {
-            try
-            {
                 if (string.IsNullOrEmpty(updateUserDto.FirstName) || string.IsNullOrEmpty(updateUserDto.LastName) || string.IsNullOrEmpty(updateUserDto.Email))
                 {
                     return BadRequest("Firstname, Lastname, and Email are required");
                 }
                 _userService.UpdateUser(updateUserDto.FirstName, updateUserDto.LastName, updateUserDto.Email);
                 return Ok("User Successfully Updated");
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
 
         [HttpPost]
         [Route("/Register")]
         public IActionResult Register([FromBody] RegisterDTO request)
         {
-            try
+            if (request != null)
             {
                 var user = _userService.Register(request.FirstName, request.LastName, request.Password, request.RePassword, request.Email);
                 return Ok(user);
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            return BadRequest();
         }
         [HttpPost]
         [Route("/Login")]
         public IActionResult Login([FromBody] LoginDTO request)
         {
-            try
+
+            if (request != null)
             {
                 var user = _userService.Authenticate(request.Email, request.Password);
                 return Ok(user); // HTTP 200 OK
             }
-            catch (UnauthorizedAccessException e)
-            {
-                return Unauthorized(new { message = e.Message }); // HTTP 401 Unauthorized
-            }
-            catch (Exception e)
-            {
-                // Log the exception if needed
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred" });
-            }
+            return BadRequest();
         }
     }
 }

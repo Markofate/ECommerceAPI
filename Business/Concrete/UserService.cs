@@ -10,6 +10,7 @@ using Entities.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -119,12 +120,21 @@ namespace Business.Concrete
                 {
                     return user;
                 }
+
                 throw new UnauthorizedAccessException("Incorrect Email or Password");
             }
-            catch (Exception e)
+            catch (UnauthorizedAccessException ex)
             {
-                throw e;
+                // Loglama veya başka bir işlem yapmak isterseniz burada yapabilirsiniz.
+                Log.Warning("Login Attempt On {@email} ,{@ex}", email, ex);
+                throw ex; // Exception'ı yeniden fırlat
+            }
+            catch (Exception ex)
+            {
+                // Loglama veya başka bir işlem yapmak isterseniz burada yapabilirsiniz.
+                throw new Exception("An unexpected error occurred while authenticating.", ex);
             }
         }
     }
+    
 }

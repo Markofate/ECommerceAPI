@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Entities.Concrete;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -19,7 +20,17 @@ namespace Business.Concrete
         }
         public List<Categories> GetCategories()
         {
-            return _catogryRepository.GetAll();
+            try
+            {
+                return _catogryRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         public Categories GetByCategoryId(int id)
