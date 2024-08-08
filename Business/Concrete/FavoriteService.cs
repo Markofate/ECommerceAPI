@@ -7,6 +7,7 @@ using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -31,8 +32,17 @@ namespace Business.Concrete
 
         public List<Favorites> GetFavoritesByEmail(string email)
         {
-            var user = _userRepository.Get(u => u.Email == email);
-            return _favoriteRepository.GetAll(f=>f.UserId==user.UserId);
+            try
+            {
+                var user = _userRepository.Get(u => u.Email == email);
+                return _favoriteRepository.GetAll(f => f.UserId == user.UserId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
 
         public Favorites GetFavoriteByProductId(int productId)
@@ -49,13 +59,14 @@ namespace Business.Concrete
                 {
                     Favorites favorite = new Favorites()
                     {
-                    UserId = user.UserId,
-                    ProductId = productId, 
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                    CreatedBy = user.Email,
-                    UpdatedBy = user.Email,
+                        UserId = user.UserId,
+                        ProductId = productId,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        CreatedBy = user.Email,
+                        UpdatedBy = user.Email,
                     };
+                    
                     _favoriteRepository.Add(favorite);
                     return favorite;
                 }
@@ -65,6 +76,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
+                Log.Error("Error Occured: {@e}", e);
                 Console.WriteLine(e);
             }
 
@@ -80,6 +92,7 @@ namespace Business.Concrete
                 if (user != null && favorite != null)
                 {
                     _favoriteRepository.Delete(favorite);
+                    Log.Information("Favorite Removed By: {@email}", email);
                     return favorite;
                 }
                 else
@@ -89,6 +102,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
+                Log.Error("Error Occured: {@e}", e);
                 Console.WriteLine(e);
             }
 

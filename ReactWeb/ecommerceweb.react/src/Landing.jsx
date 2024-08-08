@@ -4,8 +4,7 @@ import 'primeicons/primeicons.css';
 
 function Landing() {
   const handleButtonClick = () => {
-    // Kullanıcıyı yönlendirme
-    window.location.href = '/products'; // Örneğin, ürünler sayfasına yönlendirme
+    window.location.href = '/products'; 
   };
 
   return (

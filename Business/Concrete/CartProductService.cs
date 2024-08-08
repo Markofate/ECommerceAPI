@@ -9,6 +9,7 @@ using DataAccess.Abstract.Repositories;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -122,11 +123,13 @@ namespace Business.Concrete
             catch (InvalidOperationException ex)
             {
                 // Exception'ı tekrar fırlat
-                throw;
+                Log.Error("Error Occured: {@ex}", ex);  
+                throw ex;
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                Console.WriteLine(exception);
+                Log.Error("Error Occured: {@e}", e);
+                Console.WriteLine(e);
             }
 
             return null;
@@ -150,9 +153,10 @@ namespace Business.Concrete
                     throw new Exception("Cart Or Product Not Found");
                 }
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                Console.WriteLine(exception);
+                Log.Error("Error Occured: {@e}", e);
+                Console.WriteLine(e);
             }
 
             return null;

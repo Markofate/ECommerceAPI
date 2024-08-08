@@ -31,10 +31,10 @@ namespace DataAccess.Concrete.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(
-                    "Server=KEMAL-KUNT\\MSSQLSERVER01;Database=ECommerce;Trusted_Connection=True;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=KEMAL-KUNT\\MSSQLSERVER01;Database=ECommerce;User Id=sa;Password=P@ssw0rd123;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
+        
 
     }
 
