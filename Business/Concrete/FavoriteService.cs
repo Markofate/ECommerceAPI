@@ -22,12 +22,30 @@ namespace Business.Concrete
         }
         public List<Favorites> GetFavorites()
         {
-            return _favoriteRepository.GetAll();
+            try
+            {
+                return _favoriteRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Favorites GetFavoriteById(int favoriteId)
         {
-            return _favoriteRepository.Get(f => f.FavoriteId == favoriteId);
+            try
+            {
+                return _favoriteRepository.Get(f => f.FavoriteId == favoriteId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public List<Favorites> GetFavoritesByEmail(string email)
@@ -39,7 +57,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Error("Error Occured: {@e}", e);
                 throw;
             }
 
@@ -47,7 +65,16 @@ namespace Business.Concrete
 
         public Favorites GetFavoriteByProductId(int productId)
         {
-            return _favoriteRepository.Get(f => f.ProductId == productId);
+            try
+            {
+                return _favoriteRepository.Get(f => f.ProductId == productId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Favorites AddProductToFavorite(string email, int productId)
@@ -66,7 +93,7 @@ namespace Business.Concrete
                         CreatedBy = user.Email,
                         UpdatedBy = user.Email,
                     };
-                    
+
                     _favoriteRepository.Add(favorite);
                     return favorite;
                 }
@@ -77,10 +104,8 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
+                throw e;
             }
-
-            return null;
         }
 
         public Favorites RemoveProductFromFavorites(string email, int productId)
@@ -92,7 +117,7 @@ namespace Business.Concrete
                 if (user != null && favorite != null)
                 {
                     _favoriteRepository.Delete(favorite);
-                    Log.Information("Favorite {@favorite} Removed By: {@email}", favorite,email);
+                    Log.Information("Favorite {@favorite} Removed By: {@email}", favorite, email);
                     return favorite;
                 }
                 else
@@ -103,10 +128,8 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
+                throw e;
             }
-
-            return null;
         }
     }
 }

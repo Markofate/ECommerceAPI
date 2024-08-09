@@ -26,16 +26,43 @@ namespace Business.Concrete
 
         public List<Users> GetUsers()
         {
-            return _userRepository.GetAll();
+            try
+            {
+                return _userRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Users GetUserById(int id)
         {
-            return _userRepository.Get(ui => ui.UserId == id);
+            try
+            {
+                return _userRepository.Get(ui => ui.UserId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
         public Users GetUserByEmail(string email)
         {
-            return _userRepository.Get(u => u.Email == email);
+            try
+            {
+                return _userRepository.Get(u => u.Email == email);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Users UpdateUser(string firstname, string lastname, string email)
@@ -57,14 +84,23 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Error("Error Occured: {@e}", e);
                 throw;
             }
         }
 
         public List<string> GetUserEmails()
         {
-            return _userRepository.GetAll().Select(u => u.Email).ToList();
+            try
+            {
+                return _userRepository.GetAll().Select(u => u.Email).ToList();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Users Register(string firstName, string lastName, string password, string rePassword, string email)
@@ -105,6 +141,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
+                Log.Error("Error Occured: {@e}", e);
                 throw e;
             }
 
@@ -121,20 +158,16 @@ namespace Business.Concrete
                     return user;
                 }
 
-                throw new UnauthorizedAccessException("Incorrect Email or Password");
+                throw new Exception("Incorrect Email or Password");
             }
-            catch (UnauthorizedAccessException ex)
+
+            catch (Exception e)
             {
-                // Loglama veya başka bir işlem yapmak isterseniz burada yapabilirsiniz.
-                Log.Warning("Login Attempt On {@email} ,{@ex}", email, ex);
-                throw ex; // Exception'ı yeniden fırlat
+                Log.Error("Error Occured: {@e}", e);
             }
-            catch (Exception ex)
-            {
-                // Loglama veya başka bir işlem yapmak isterseniz burada yapabilirsiniz.
-                throw new Exception("An unexpected error occurred while authenticating.", ex);
-            }
+
+            return null;
         }
     }
-    
+
 }

@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework.Repositories
 {
-    public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>
-
-        where TEntity : class, new()
-
-        where TContext : DbContext, new()
+    public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity> where TEntity : class, new() where TContext : DbContext, new()
     {
-
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
@@ -24,7 +19,6 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
                 return context.Set<TEntity>().FirstOrDefault(filter);
             }
         }
-
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
@@ -32,7 +26,6 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
                 return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
             }
         }
-
         public void Add(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -44,7 +37,6 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
                 context.SaveChanges();
             }
         }
-
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -56,8 +48,6 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
                 context.SaveChanges();
             }
         }
-        
-
         public void Delete(TEntity entity)
         {
             using (TContext context = new TContext())

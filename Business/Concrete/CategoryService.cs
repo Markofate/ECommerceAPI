@@ -27,15 +27,23 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
                 throw;
             }
-            
+
         }
 
         public Categories GetByCategoryId(int id)
         {
-            return _catogryRepository.Get(c => c.CategoryId == id);
+            try
+            {
+                return _catogryRepository.Get(c => c.CategoryId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw e;
+            }
+
         }
 
     }
