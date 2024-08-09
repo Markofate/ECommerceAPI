@@ -13,7 +13,7 @@ using Serilog;
 
 namespace Business.Concrete
 {
-    public class CartProductService: ICartProductService
+    public class CartProductService : ICartProductService
     {
         private readonly ICartProductRepository _cartProductRepository;
         private readonly ICartRepository _cartRepository;
@@ -26,60 +26,109 @@ namespace Business.Concrete
             _cartRepository = cartRepository;
             _productRepository = productRepository;
             _userRepository = userRepository;
-            
+
         }
         public List<CartProducts> GetCartProducts()
         {
-            return _cartProductRepository.GetAll();
+            try
+            {
+                return _cartProductRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
-        
+
         public CartProducts GetCartProductById(int id)
         {
-            return _cartProductRepository.Get(cp => cp.CartProductId == id);
+            try
+            {
+                return _cartProductRepository.Get(cp => cp.CartProductId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public List<CartProducts> GetCartProductsByCartId(int cartId)
         {
-            return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
+            try
+            {
+                return _cartProductRepository.GetAll(cp => cp.CartId == cartId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public List<CartProducts> GetCartProductsByEmail(string email)
         {
-            var user = _userRepository.Get(u => u.Email == email);
-            var cart = _cartRepository.Get(c => c.UserId == user.UserId);
+            try
+            {
+                var user = _userRepository.Get(u => u.Email == email);
+                var cart = _cartRepository.Get(c => c.UserId == user.UserId);
 
-            return _cartProductRepository.GetAll(cp=>cp.CartId == cart.CartId);
+                return _cartProductRepository.GetAll(cp => cp.CartId == cart.CartId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public CartProducts GetCartProductByProductAndCartId(int cartId, int productId)
         {
-            return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);
+            try
+            {
+                return _cartProductRepository.Get(cp => cp.CartId == cartId && cp.ProductId == productId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+           
         }
 
         public CartProducts AddProductToCart(int productId, int quantity, string email)
         {
             try
             {
-                var user = _userRepository.Get(u=>u.Email==email);
-                var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
-                var product = _productRepository.Get(p=>p.ProductId == productId);
+                var user = _userRepository.Get(u => u.Email == email);
+                var cart = _cartRepository.Get(c => c.UserId == user.UserId);
+                var product = _productRepository.Get(p => p.ProductId == productId);
                 var cartProducts = GetCartProductsByCartId(cart.CartId);
                 bool isInCart = false;
 
 
-                if (cart!=null)
+                if (cart != null)
                 {
                     CartProducts cartProduct = new CartProducts()
                     {
-                        CartId = cart.CartId, ProductId = productId, Quantity = quantity, CreatedAt = DateTime.Now,
+                        CartId = cart.CartId,
+                        ProductId = productId,
+                        Quantity = quantity,
+                        CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now,
-                        CreatedBy = cart.CreatedBy, UpdatedBy = cart.UpdatedBy
+                        CreatedBy = cart.CreatedBy,
+                        UpdatedBy = cart.UpdatedBy
                     };
                     if (cartProducts.Count == 0)
                     {
                         _cartProductRepository.Add(cartProduct);
 
-                        cart.TotalAmount += quantity * product.Price;
+                        cart.TotalAmount = quantity * product.Price;
 
                         return cartProduct;
                     }
@@ -99,18 +148,15 @@ namespace Business.Concrete
                                 cart.TotalAmount += quantity * product.Price;
                                 return cp;
                             }
-                            else
-                            {
-                                throw new InvalidOperationException("No Available Stock");
-                            }
-                            
+                            throw new Exception("No Available Stock");
+
                         }
                     }
                     if (!isInCart)
                     {
                         _cartProductRepository.Add(cartProduct);
 
-                        cart.TotalAmount += quantity * product.Price;
+                        cart.TotalAmount += (quantity * product.Price);
 
                         return cartProduct;
                     }
@@ -120,16 +166,11 @@ namespace Business.Concrete
                     throw new Exception("Cart Not Found");
                 }
             }
-            catch (InvalidOperationException ex)
-            {
-                // Exception'ı tekrar fırlat
-                Log.Error("Error Occured: {@ex}", ex);  
-                throw ex;
-            }
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
+                throw e;
+
             }
 
             return null;
@@ -156,10 +197,8 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
+                throw e;
             }
-
-            return null;
         }
 
         public List<CartProducts> GetCartProductsByUserId(int userId)

@@ -34,17 +34,41 @@ namespace Business.Concrete
         }
         public List<OrderProducts> GetOrderProducts()
         {
-            return _orderProductRepository.GetAll();
+            try
+            {
+                return _orderProductRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
         }
 
         public OrderProducts GetOrderProductById(int id)
         {
-            return _orderProductRepository.Get(op=>op.OrderProductId==id);
+            try
+            {
+                return _orderProductRepository.Get(op => op.OrderProductId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
         }
 
         public List<OrderProducts> GetOrderProductsByOrderId(int id)
         {
-            return _orderProductRepository.GetAll(op=>op.OrderId==id);
+            try
+            {
+                return _orderProductRepository.GetAll(op => op.OrderId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
         }
 
         public List<OrderProducts> AddProductsToOrder(string email, string address)
@@ -52,9 +76,9 @@ namespace Business.Concrete
             try
             {
                 var user = _userRepository.Get(u => u.Email == email);
-                var cart = _cartRepository.Get(c=>c.UserId==user.UserId);
-                var cartProducts = _cartProductRepository.GetAll(cp=>cp.CartId==cart.CartId);
-                var order = _orderRepository.CreateOrder(email,address);
+                var cart = _cartRepository.Get(c => c.UserId == user.UserId);
+                var cartProducts = _cartProductRepository.GetAll(cp => cp.CartId == cart.CartId);
+                var order = _orderRepository.CreateOrder(email, address);
                 List<Products> productsList = [];
                 decimal? totalAmount = 0;
                 if (!cartProducts.IsNullOrEmpty())
@@ -62,29 +86,33 @@ namespace Business.Concrete
                     List<OrderProducts> orderProductList = [];
                     foreach (var cartProduct in cartProducts)
                     {
-                        productsList.Add(_productRepository.Get(p=>p.ProductId == cartProduct.ProductId));
+                        productsList.Add(_productRepository.Get(p => p.ProductId == cartProduct.ProductId));
                         OrderProducts orderProduct = new OrderProducts()
-                        { OrderId = order.OrderId,
-                            ProductId = cartProduct.ProductId, Quantity = cartProduct.Quantity, CreatedAt = cartProduct.CreatedAt, UpdatedAt = cartProduct.UpdatedAt,
-                            CreatedBy = cartProduct.CreatedBy, UpdatedBy = cartProduct.UpdatedBy
+                        {
+                            OrderId = order.OrderId,
+                            ProductId = cartProduct.ProductId,
+                            Quantity = cartProduct.Quantity,
+                            CreatedAt = cartProduct.CreatedAt,
+                            UpdatedAt = cartProduct.UpdatedAt,
+                            CreatedBy = cartProduct.CreatedBy,
+                            UpdatedBy = cartProduct.UpdatedBy
                         };
                         _orderProductRepository.Add(orderProduct);
 
-
-                        _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
-                        foreach (var product in productsList)
-                        {
-                            product.Stock -= cartProduct.Quantity;
-                            product.Sales += cartProduct.Quantity;
-                            _productRepository.Update(product);
-
-                            totalAmount += product.Price * cartProduct.Quantity;
-                        }
-                        order.TotalAmount = totalAmount; // Update order total amount
-                        _orderRepository.Update(order);
                         orderProductList.Add(orderProduct);
+                        _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
                     }
+                    for (int i = 0; i < productsList.Count; i++)
+                    {
+                        productsList[i].Stock -= cartProducts[i].Quantity;
+                        productsList[i].Sales += cartProducts[i].Quantity;
+                        _productRepository.Update(productsList[i]);
 
+                        totalAmount += productsList[i].Price * cartProducts[i].Quantity;
+                    }
+                    order.TotalAmount = totalAmount; // Update order total amount
+                    _orderRepository.Update(order);
+                    
                     return orderProductList;
                 }
                 else
@@ -95,10 +123,8 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);  
+                throw e;
             }
-
-            return null;   
         }
     }
 }

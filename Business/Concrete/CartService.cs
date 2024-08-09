@@ -22,17 +22,44 @@ namespace Business.Concrete
         }
         public List<Carts> GetCarts()
         {
-            return _cartRepository.GetAll();
+            try
+            {
+                return _cartRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Carts GetCartById(int id)
         {
-           return _cartRepository.Get(c=>c.CartId==id);
+            try
+            {
+                return _cartRepository.Get(c => c.CartId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Carts GetCartByUserId(int userId)
         {
-            return _cartRepository.Get(c=>c.UserId==userId);
+            try
+            {
+                return _cartRepository.Get(c => c.UserId == userId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
 
@@ -40,16 +67,15 @@ namespace Business.Concrete
         {
             try
             {
-                Log.Warning("New Cart Created By: {@email}",email);
+                Log.Warning("New Cart Created By: {@email}", email);
                 return _cartRepository.CreateCart(email);
             }
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
                 throw;
             }
-            
+
         }
     }
 }

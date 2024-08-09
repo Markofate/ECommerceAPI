@@ -25,16 +25,43 @@ namespace Business.Concrete
 
         public List<Orders> GetOrders()
         {
-            return _orderRepository.GetAll();
+            try
+            {
+                return _orderRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Orders GetOrderById(int id)
         {
-            return _orderRepository.Get(o => o.OrderId == id);
+            try
+            {
+                return _orderRepository.Get(o => o.OrderId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
         public Orders GetOrderByUserId(int id)
         {
-            return _orderRepository.Get(o => o.UserId == id);
+            try
+            {
+                return _orderRepository.Get(o => o.UserId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public List<Orders> GetOrdersByUserEmail(string email)
@@ -46,7 +73,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Error("Error Occured: {@e}", e);
                 throw;
             }
 
@@ -56,13 +83,11 @@ namespace Business.Concrete
         {
             try
             {
-                
                 return _orderRepository.CreateOrder(email, address);
             }
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
                 throw;
             }
 

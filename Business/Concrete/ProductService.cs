@@ -32,30 +32,66 @@ namespace Business.Concrete
         }
         public bool UpdateProduct(Products product)
         {
-            if (product != null)
+            try
             {
-                _productRepository.Update(product);
-                return true;
+                if (product != null)
+                {
+                    _productRepository.Update(product);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return false;
+                Log.Error("Error Occured: {@e}", e);
+                throw;
             }
+
         }
         public List<Products> GetProducts(Expression<Func<Products, bool>> filter = null)
         {
-            var products = _productRepository.GetAll(filter);
-            //Log.Information("Products retrieved: {@Products}", products); şeklinde loglama yapılabilir 
-            return products;
+            try
+            {
+                var products = _productRepository.GetAll(filter);
+                //Log.Information("Products retrieved: {@Products}", products); şeklinde loglama yapılabilir 
+                return products;
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public Products GetProductById(int id)
         {
-            return _productRepository.Get(p => p.ProductId == id);
+            try
+            {
+                return _productRepository.Get(p => p.ProductId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
         public List<Products> GetProductsByCategoryId(int categoryId)
         {
-            return _productRepository.GetAll(p => p.CategoryId == categoryId);
+            try
+            {
+                return _productRepository.GetAll(p => p.CategoryId == categoryId);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
 
         public List<Products> GetProductsByEmail(string email)
@@ -75,7 +111,6 @@ namespace Business.Concrete
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
-                Console.WriteLine(e);
                 throw;
             }
 

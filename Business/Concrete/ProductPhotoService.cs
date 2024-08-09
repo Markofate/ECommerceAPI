@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract.Repositories;
 using Entities.Concrete;
+using Serilog;
 
 namespace Business.Concrete
 {
@@ -17,51 +18,18 @@ namespace Business.Concrete
         {
             _productPhotoRepository = productPhotoRepository;
         }
-
-        public bool AddProductPhoto(ProductPhotos photo)
-        {
-            if (photo != null)
-            {
-                _productPhotoRepository.Add(photo);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        public bool UpdateProductPhoto(ProductPhotos photo)
-        {
-            if (photo != null)
-            {
-                _productPhotoRepository.Update(photo);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        public bool DeleteProductPhoto(ProductPhotos photo)
-        {
-            if (photo != null)
-            {
-                _productPhotoRepository.Delete(photo);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public List<ProductPhotos> GetProductPhotosByProductId(int id)
         {
-            return _productPhotoRepository.GetAll(pp => pp.ProductId == id);
+            try
+            {
+                return _productPhotoRepository.GetAll(pp => pp.ProductId == id);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error Occured: {@e}", e);
+                throw;
+            }
+
         }
     }
 }

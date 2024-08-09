@@ -30,7 +30,7 @@ const Register = () => {
       setError(err.message);;
       Swal.fire({
         title: 'Something Went Wrong',
-        text: err.response.data,
+        text: "Check Email or Passwords",
         icon: 'error'
       })
     }
