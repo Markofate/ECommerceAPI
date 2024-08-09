@@ -99,21 +99,20 @@ namespace Business.Concrete
                         };
                         _orderProductRepository.Add(orderProduct);
 
-
-                        _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
-                        foreach (var product in productsList)
-                        {
-                            product.Stock -= cartProduct.Quantity;
-                            product.Sales += cartProduct.Quantity;
-                            _productRepository.Update(product);
-
-                            totalAmount += product.Price * cartProduct.Quantity;
-                        }
-                        order.TotalAmount = totalAmount; // Update order total amount
-                        _orderRepository.Update(order);
                         orderProductList.Add(orderProduct);
+                        _cartProductRepository.RemoveProductFromCart(cartProduct.ProductId, email);
                     }
+                    for (int i = 0; i < productsList.Count; i++)
+                    {
+                        productsList[i].Stock -= cartProducts[i].Quantity;
+                        productsList[i].Sales += cartProducts[i].Quantity;
+                        _productRepository.Update(productsList[i]);
 
+                        totalAmount += productsList[i].Price * cartProducts[i].Quantity;
+                    }
+                    order.TotalAmount = totalAmount; // Update order total amount
+                    _orderRepository.Update(order);
+                    
                     return orderProductList;
                 }
                 else

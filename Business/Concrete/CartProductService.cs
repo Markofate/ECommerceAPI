@@ -128,7 +128,7 @@ namespace Business.Concrete
                     {
                         _cartProductRepository.Add(cartProduct);
 
-                        cart.TotalAmount += quantity * product.Price;
+                        cart.TotalAmount = quantity * product.Price;
 
                         return cartProduct;
                     }
@@ -156,7 +156,7 @@ namespace Business.Concrete
                     {
                         _cartProductRepository.Add(cartProduct);
 
-                        cart.TotalAmount += quantity * product.Price;
+                        cart.TotalAmount += (quantity * product.Price);
 
                         return cartProduct;
                     }
