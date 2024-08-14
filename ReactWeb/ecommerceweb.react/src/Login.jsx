@@ -17,11 +17,14 @@ const Login = () => {
       });
       localStorage.setItem('email', response.data.email);
       window.location.replace("/");
+      
     } catch (err) {
       setError(err.message);
+      console.log(err)
+      
       Swal.fire({
         title: 'Something Went Wrong',
-        text: err.response.data.message,
+        text: 'Check Email or Password',
         icon: 'error'
       })
     }
