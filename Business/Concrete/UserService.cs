@@ -158,15 +158,14 @@ namespace Business.Concrete
                     return user;
                 }
 
-                throw new Exception("Incorrect Email or Password");
+                throw new Exception(message:"Incorrect Email or Password");
             }
 
             catch (Exception e)
             {
                 Log.Error("Error Occured: {@e}", e);
+                throw e;
             }
-
-            return null;
         }
     }
 
