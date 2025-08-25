@@ -11,16 +11,8 @@ This repository follows a clean, layered architecture to keep domain logic, data
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Backend (API)](#backend-api)
-  - [Frontend (React Web)](#frontend-react-web)
-  - [Docker](#docker)
-- [Configuration](#configuration)
 - [API Overview](#api-overview)
-- [Development Guide](#development-guide)
 - [Roadmap Ideas](#roadmap-ideas)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -109,79 +101,6 @@ Language footprint in this repo indicates a React-heavy frontend with a .NET API
 
 ---
 
-## Getting Started
-
-### Prerequisites
-- .NET SDK (LTS, e.g., .NET 7/8)
-- Node.js (LTS) and npm or yarn
-- A SQL database (e.g., SQL Server/PostgreSQL) or local dev DB
-- Docker (optional, for containerized runs)
-
-### Backend (API)
-1. Restore and build:
-   ```bash
-   dotnet restore
-   dotnet build
-   ```
-2. Configure your connection string and app settings (see [Configuration](#configuration)).
-3. Apply database migrations (if EF Core is used):
-   ```bash
-   # Example:
-   dotnet ef database update --project DataAccess --startup-project ECommerceAPI
-   ```
-4. Run the API:
-   ```bash
-   dotnet run --project ECommerceAPI
-   ```
-5. API should start on a local port (check console output). If Swagger/OpenAPI is enabled, browse to:
-   - http://localhost:<port>/swagger
-
-### Frontend (React Web)
-1. Install dependencies:
-   ```bash
-   cd ReactWeb
-   npm install
-   ```
-2. Start the dev server:
-   ```bash
-   npm start
-   ```
-3. By default, the frontend dev server runs on a local port (e.g., 3000). Ensure the API base URL is correctly configured for local development.
-
-### Docker
-Build and run the API container:
-```bash
-# From repo root (adjust tag/ports as needed)
-docker build -t ecommerce-api -f Dockerfile .
-docker run --rm -p 8080:8080 -e ASPNETCORE_URLS=http://+:8080 ecommerce-api
-```
-
-If the project provides a Docker Compose file for full stack, use:
-```bash
-docker compose up --build
-```
-
----
-
-## Configuration
-
-Common configuration points (names may differ based on implementation):
-
-- API (ECommerceAPI/appsettings.json):
-  - ConnectionStrings:Default
-  - JWT:Issuer, JWT:Audience, JWT:Key (if JWT is used)
-  - CORS allowed origins for React dev server
-- React (ReactWeb):
-  - Environment variables (e.g., REACT_APP_API_BASE_URL)
-  - Proxy config for local development (if using create-react-app proxy)
-
-Example API base URL for React:
-```env
-REACT_APP_API_BASE_URL=http://localhost:8080
-```
-
----
-
 ## API Overview
 
 Typical endpoints you may find (exact routes may vary):
@@ -214,23 +133,6 @@ GET /api/products?search=shirt&category=men&sort=price_desc&page=2&pageSize=20
 
 For the exact contract, see the controllers under `ECommerceAPI` and any DTOs under `Entities`, and check Swagger if available.
 
----
-
-## Development Guide
-
-- Code Style
-  - Keep domain rules in Business and Entities layers
-  - Keep persistence details in DataAccess (repositories/DbContext)
-  - Keep HTTP concerns in ECommerceAPI (controllers, middleware)
-- Error Handling
-  - Prefer consistent error response models
-  - Centralized exception handling via middleware (if present)
-- Validation
-  - Apply input validation at the API boundary and reinforce critical invariants at the domain level
-- Testing
-  - Consider unit tests for Business and integration tests for API endpoints
-
----
 
 ## Roadmap Ideas
 
@@ -245,17 +147,4 @@ For the exact contract, see the controllers under `ECommerceAPI` and any DTOs un
 
 ---
 
-## Contributing
 
-Contributions are welcome! Please:
-- Open an issue describing your proposal or bug
-- Submit a PR with clear description and scoped changes
-- Keep code aligned with the architecture and style guidelines
-
----
-
-## License
-
-This repository’s license will govern how you can use and contribute to the code. See the `LICENSE` file if provided, or add one to clarify usage.
-
----
